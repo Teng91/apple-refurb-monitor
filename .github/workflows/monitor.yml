@@ -1,0 +1,50 @@
+name: Apple Refurbished Monitor
+
+on:
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+      timezone: "Asia/Taipei"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apple-refurb-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check Apple refurbished store
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          APPLE_CATEGORIES: ${{ vars.APPLE_CATEGORIES || 'mac,ipad,airpods,homepod,appletv,accessories' }}
+          INCLUDE_KEYWORDS: ${{ vars.INCLUDE_KEYWORDS }}
+          EXCLUDE_KEYWORDS: ${{ vars.EXCLUDE_KEYWORDS }}
+          MAX_PRICE_TWD: ${{ vars.MAX_PRICE_TWD }}
+          NOTIFY_ON_FIRST_RUN: "true"
+        run: python apple_refurb_monitor.py
+
+      - name: Persist latest product snapshot
+        run: |
+          if git diff --quiet -- data/state.json && git diff --cached --quiet; then
+            echo "State unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/state.json
+          git commit -m "chore: update refurbished product snapshot"
+          git push
