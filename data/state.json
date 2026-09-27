@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-09-26T17:58:55.360846+00:00",
-  "product_count": 67,
+  "checked_at": "2026-09-27T01:43:44.266763+00:00",
+  "product_count": 66,
   "products": {
     "FDE14TA/A": {
       "sku": "FDE14TA/A",
@@ -190,13 +190,6 @@
       "price": 22000,
       "url": "https://www.apple.com/tw/shop/product/fhfj4ta/a/13-%E5%90%8B-macbook-neo-%E8%83%AD%E7%B2%89%E8%89%B2",
       "category": "mac"
-    },
-    "FN873TA/A": {
-      "sku": "FN873TA/A",
-      "title": "Apple TV 4K 64GB (第 3 代) Wi-Fi (整修品)",
-      "price": 5900,
-      "url": "https://www.apple.com/tw/shop/product/fn873ta/a/apple-tv-4k-64gb-%E7%AC%AC-3-%E4%BB%A3-wi-fi-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "appletv"
     },
     "FN893TA/A": {
       "sku": "FN893TA/A",
