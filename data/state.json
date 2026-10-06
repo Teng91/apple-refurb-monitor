@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-10-05T21:36:05.579515+00:00",
-  "product_count": 53,
+  "checked_at": "2026-10-06T08:53:03.211701+00:00",
+  "product_count": 64,
   "products": {
     "FC6J4TA/A": {
       "sku": "FC6J4TA/A",
@@ -23,12 +23,61 @@
       "url": "https://www.apple.com/tw/shop/product/fde14ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%AA%E7%A9%BA%E9%BB%91%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
-    "FDVA4TA/A": {
-      "sku": "FDVA4TA/A",
-      "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
-      "price": 51300,
-      "url": "https://www.apple.com/tw/shop/product/fdva4ta/a",
-      "category": "mac"
+    "FFEL4TA/A": {
+      "sku": "FFEL4TA/A",
+      "title": "Studio Display XDR - 標準玻璃 - 可調整斜度與高度的支架 (整修品)",
+      "price": 93190,
+      "url": "https://www.apple.com/tw/shop/product/ffel4ta/a/%E6%A8%99%E6%BA%96%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E8%88%87%E9%AB%98%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6",
+      "category": "accessories"
+    },
+    "FFEN4TA/A": {
+      "sku": "FFEN4TA/A",
+      "title": "Studio Display XDR - 標準玻璃 - VESA 吊架連接器 (整修品)",
+      "price": 82990,
+      "url": "https://www.apple.com/tw/shop/product/ffen4ta/a/Studio-Display-XDR-%E6%A8%99%E6%BA%96%E7%8E%BB%E7%92%83-VESA-%E5%90%8A%E6%9E%B6%E9%80%A3%E6%8E%A5%E5%99%A8-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "accessories"
+    },
+    "FFEP4TA/A": {
+      "sku": "FFEP4TA/A",
+      "title": "Studio Display XDR - 奈米紋理玻璃 - 可調整斜度與高度的支架 (整修品)",
+      "price": 101890,
+      "url": "https://www.apple.com/tw/shop/product/ffep4ta/a/%E5%A5%88%E7%B1%B3%E7%B4%8B%E7%90%86%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E8%88%87%E9%AB%98%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6",
+      "category": "accessories"
+    },
+    "FFEQ4TA/A": {
+      "sku": "FFEQ4TA/A",
+      "title": "Studio Display XDR - 奈米紋理玻璃 - VESA 吊架連接器 (整修品)",
+      "price": 91690,
+      "url": "https://www.apple.com/tw/shop/product/ffeq4ta/a/%E5%A5%88%E7%B1%B3%E7%B4%8B%E7%90%86%E7%8E%BB%E7%92%83-VESA-%E5%90%8A%E6%9E%B6%E9%80%A3%E6%8E%A5%E5%99%A8",
+      "category": "accessories"
+    },
+    "FFEW4TA/A": {
+      "sku": "FFEW4TA/A",
+      "title": "Studio Display - 標準玻璃 - 可調整斜度與高度的支架 (整修品)",
+      "price": 55190,
+      "url": "https://www.apple.com/tw/shop/product/ffew4ta/a/Studio-Display-%E6%A8%99%E6%BA%96%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E8%88%87%E9%AB%98%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "accessories"
+    },
+    "FFEX4TA/A": {
+      "sku": "FFEX4TA/A",
+      "title": "Studio Display - 標準玻璃 - 可調整斜度的支架 (整修品)",
+      "price": 44990,
+      "url": "https://www.apple.com/tw/shop/product/ffex4ta/a/Studio-Display-%E6%A8%99%E6%BA%96%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "accessories"
+    },
+    "FFEY4TA/A": {
+      "sku": "FFEY4TA/A",
+      "title": "Studio Display - 標準玻璃 - VESA 吊架連接器 (整修品)",
+      "price": 44990,
+      "url": "https://www.apple.com/tw/shop/product/ffey4ta/a/Studio-Display-%E6%A8%99%E6%BA%96%E7%8E%BB%E7%92%83-VESA-%E5%90%8A%E6%9E%B6%E9%80%A3%E6%8E%A5%E5%99%A8-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "accessories"
+    },
+    "FFF04TA/A": {
+      "sku": "FFF04TA/A",
+      "title": "Studio Display - 奈米紋理玻璃 - 可調整斜度與高度的支架 (整修品)",
+      "price": 63490,
+      "url": "https://www.apple.com/tw/shop/product/fff04ta/a/Studio-Display-%E5%A5%88%E7%B1%B3%E7%B4%8B%E7%90%86%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E8%88%87%E9%AB%98%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "accessories"
     },
     "FFF14TA/A": {
       "sku": "FFF14TA/A",
@@ -127,6 +176,34 @@
       "price": 36100,
       "url": "https://www.apple.com/tw/shop/product/fvw23ta/a/11-%E5%90%8B-iPad-Pro-M4-Wi-Fi-%E8%A1%8C%E5%8B%95%E7%B6%B2%E8%B7%AF%E6%A9%9F%E5%9E%8B-256GB-%E9%85%8D%E5%82%99%E6%A8%99%E6%BA%96%E7%8E%BB%E7%92%83-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "ipad"
+    },
+    "FWUF3TA/A": {
+      "sku": "FWUF3TA/A",
+      "title": "24 吋 iMac Apple M4 晶片配備 8 核心 CPU 與 8 核心 GPU - 藍色 (整修品)",
+      "price": 42200,
+      "url": "https://www.apple.com/tw/shop/product/fwuf3ta/a/24-%E5%90%8B-iMac-Apple-M4-%E6%99%B6%E7%89%87-%E9%85%8D%E5%82%99-8-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-8-%E6%A0%B8%E5%BF%83-GPU-%E8%97%8D%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "FWUU3TA/A": {
+      "sku": "FWUU3TA/A",
+      "title": "24 吋 iMac Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、Gigabit 乙太網路 - 銀色 (整修品)",
+      "price": 49000,
+      "url": "https://www.apple.com/tw/shop/product/fwuu3ta/a/24-%E5%90%8B-imac-apple-m4-%E6%99%B6%E7%89%87-%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-cpu-%E8%88%87-10-%E6%A0%B8%E5%BF%83-gpu-gigabit-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "FWV13TA/A": {
+      "sku": "FWV13TA/A",
+      "title": "24 吋 iMac Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、Gigabit 乙太網路 - 藍色 (整修品)",
+      "price": 49000,
+      "url": "https://www.apple.com/tw/shop/product/fwv13ta/a/24-%E5%90%8B-imac-apple-m4-%E6%99%B6%E7%89%87-%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-cpu-%E8%88%87-10-%E6%A0%B8%E5%BF%83-gpu-gigabit-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E8%97%8D%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "FWV63TA/A": {
+      "sku": "FWV63TA/A",
+      "title": "24 吋 iMac Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、Gigabit 乙太網路 - 紫色 (整修品)",
+      "price": 49000,
+      "url": "https://www.apple.com/tw/shop/product/fwv63ta/a/24-%E5%90%8B-imac-apple-m4-%E6%99%B6%E7%89%87-%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-cpu-%E8%88%87-10-%E6%A0%B8%E5%BF%83-gpu-gigabit-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E7%B4%AB%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
     },
     "FX2F3TA/A": {
       "sku": "FX2F3TA/A",
@@ -282,11 +359,25 @@
       "url": "https://www.apple.com/tw/shop/product/g1h94ta/a/13-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%A9%E8%97%8D%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
       "category": "mac"
     },
+    "G1K12TA/A": {
+      "sku": "G1K12TA/A",
+      "title": "24 吋 iMac Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、Gigabit 乙太網路、奈米紋理玻璃 - 銀色 (整修品)",
+      "price": 96600,
+      "url": "https://www.apple.com/tw/shop/product/g1k12ta/a/24-%E5%90%8B-imac-apple-m4-%E6%99%B6%E7%89%87-%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-cpu-%E8%88%87-10-%E6%A0%B8%E5%BF%83-gpu-gigabit-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E5%A5%88%E7%B1%B3-%E7%B4%8B%E7%90%86-%E7%8E%BB%E7%92%83-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
     "G1K56TA/A": {
       "sku": "G1K56TA/A",
       "title": "24 吋 iMac Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、Gigabit 乙太網路 - 藍色 (整修品)",
       "price": 90700,
       "url": "https://www.apple.com/tw/shop/product/g1k56ta/a/24-%E5%90%8B-imac-apple-m4-%E6%99%B6%E7%89%87-%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-cpu-%E8%88%87-10-%E6%A0%B8%E5%BF%83-gpu-gigabit-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E8%97%8D%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "G1K82TA/A": {
+      "sku": "G1K82TA/A",
+      "title": "24 吋 iMac Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、Gigabit 乙太網路、奈米紋理玻璃 - 橙色 (整修品)",
+      "price": 96600,
+      "url": "https://www.apple.com/tw/shop/product/g1k82ta/a/24-%E5%90%8B-imac-apple-m4-%E6%99%B6%E7%89%87-%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-cpu-%E8%88%87-10-%E6%A0%B8%E5%BF%83-gpu-gigabit-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E5%A5%88%E7%B1%B3-%E7%B4%8B%E7%90%86-%E7%8E%BB%E7%92%83-%E6%A9%99%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "G1KJ2TA/A": {
@@ -301,13 +392,6 @@
       "title": "14 吋 MacBook Pro Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
       "price": 70100,
       "url": "https://www.apple.com/tw/shop/product/g1km0ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "mac"
-    },
-    "G1KN5TA/A": {
-      "sku": "G1KN5TA/A",
-      "title": "14 吋 MacBook Pro Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU、奈米紋理顯示器 - 銀色 (整修品)",
-      "price": 65600,
-      "url": "https://www.apple.com/tw/shop/product/g1kn5ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU%E5%A5%88%E7%B1%B3%E7%B4%8B%E7%90%86%E9%A1%AF%E7%A4%BA%E5%99%A8-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "G1LS0TA/A": {
@@ -343,13 +427,6 @@
       "title": "14 吋 MacBook Pro Apple M5 Max 晶片配備 18 核心 CPU 與 40 核心 GPU - 銀色 (整修品)",
       "price": 225800,
       "url": "https://www.apple.com/tw/shop/product/g1mkjta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-Max-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-18-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-40-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "mac"
-    },
-    "G1MLBTA/A": {
-      "sku": "G1MLBTA/A",
-      "title": "14 吋 MacBook Pro Apple M5 Pro 晶片配備 15 核心 CPU 與 16 核心 GPU、奈米紋理顯示器 - 太空黑色 (整修品)",
-      "price": 91300,
-      "url": "https://www.apple.com/tw/shop/product/g1mlbta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-15-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-16-%E6%A0%B8%E5%BF%83-GPU%E5%A5%88%E7%B1%B3%E7%B4%8B%E7%90%86%E9%A1%AF%E7%A4%BA%E5%99%A8-%E5%A4%AA%E7%A9%BA%E9%BB%91%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "G1MM3TA/A": {
