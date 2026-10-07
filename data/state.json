@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-10-07T12:10:34.176673+00:00",
-  "product_count": 60,
+  "checked_at": "2026-10-07T18:58:54.452990+00:00",
+  "product_count": 58,
   "products": {
     "FC6J4TA/A": {
       "sku": "FC6J4TA/A",
@@ -29,13 +29,6 @@
       "price": 93190,
       "url": "https://www.apple.com/tw/shop/product/ffel4ta/a/%E6%A8%99%E6%BA%96%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E8%88%87%E9%AB%98%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6",
       "category": "accessories"
-    },
-    "FFEN4TA/A": {
-      "sku": "FFEN4TA/A",
-      "title": "Studio Display XDR - 標準玻璃 - VESA 吊架連接器 (整修品)",
-      "price": 82990,
-      "url": "https://www.apple.com/tw/shop/product/ffen4ta/a/Studio-Display-XDR-%E6%A8%99%E6%BA%96%E7%8E%BB%E7%92%83-VESA-%E5%90%8A%E6%9E%B6%E9%80%A3%E6%8E%A5%E5%99%A8-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "mac"
     },
     "FFEP4TA/A": {
       "sku": "FFEP4TA/A",
@@ -392,13 +385,6 @@
       "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
       "price": 72200,
       "url": "https://www.apple.com/tw/shop/product/g1ly0ta/a",
-      "category": "mac"
-    },
-    "G1MHATA/A": {
-      "sku": "G1MHATA/A",
-      "title": "14 吋 MacBook Pro Apple M5 Pro 晶片配備 15 核心 CPU 與 16 核心 GPU - 銀色 (整修品)",
-      "price": 86900,
-      "url": "https://www.apple.com/tw/shop/product/g1mhata/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-15-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-16-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "G1MJ0TA/A": {
