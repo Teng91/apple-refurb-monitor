@@ -1,14 +1,7 @@
 {
-  "checked_at": "2026-10-07T18:58:54.452990+00:00",
-  "product_count": 58,
+  "checked_at": "2026-10-08T10:25:06.655967+00:00",
+  "product_count": 57,
   "products": {
-    "FC6J4TA/A": {
-      "sku": "FC6J4TA/A",
-      "title": "15 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
-      "price": 45800,
-      "url": "https://www.apple.com/tw/shop/product/fc6j4ta/a/15-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
-      "category": "mac"
-    },
     "FC6L4TA/A": {
       "sku": "FC6L4TA/A",
       "title": "15 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
@@ -49,13 +42,6 @@
       "title": "Studio Display - 標準玻璃 - 可調整斜度與高度的支架 (整修品)",
       "price": 55190,
       "url": "https://www.apple.com/tw/shop/product/ffew4ta/a/Studio-Display-%E6%A8%99%E6%BA%96%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E8%88%87%E9%AB%98%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "accessories"
-    },
-    "FFEX4TA/A": {
-      "sku": "FFEX4TA/A",
-      "title": "Studio Display - 標準玻璃 - 可調整斜度的支架 (整修品)",
-      "price": 44990,
-      "url": "https://www.apple.com/tw/shop/product/ffex4ta/a/Studio-Display-%E6%A8%99%E6%BA%96%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "accessories"
     },
     "FFF04TA/A": {
@@ -155,6 +141,13 @@
       "price": 7200,
       "url": "https://www.apple.com/tw/shop/product/fn893ta/a/apple-tv-4k-128gb-%E7%AC%AC-3-%E4%BB%A3-wi-fi%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "appletv"
+    },
+    "FNXP3TA/A": {
+      "sku": "FNXP3TA/A",
+      "title": "12.9 吋 iPad Pro Wi-Fi 128GB (第 6 代) 太空灰色 (整修品)",
+      "price": 32700,
+      "url": "https://www.apple.com/tw/shop/product/fnxp3ta/a/129-%E5%90%8B-ipad-pro-wi-fi-128gb-%E7%AC%AC-6-%E4%BB%A3-%E5%A4%AA%E7%A9%BA%E7%81%B0%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "ipad"
     },
     "FVW23TA/A": {
       "sku": "FVW23TA/A",
