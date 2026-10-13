@@ -54,6 +54,13 @@ class Settings:
         )
 
 
+@dataclass(frozen=True)
+class Change:
+    kind: str
+    product: dict[str, Any]
+    old_price: int | None = None
+
+
 def fetch(url: str, attempts: int = 3) -> str:
     error: Exception | None = None
     for attempt in range(attempts):
@@ -140,35 +147,63 @@ def save_state(path: Path, products: dict[str, dict[str, Any]]) -> None:
     path.write_text(json.dumps(document, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def compare(old: dict[str, dict[str, Any]], new: dict[str, dict[str, Any]]) -> list[str]:
-    messages: list[str] = []
+def compare(old: dict[str, dict[str, Any]], new: dict[str, dict[str, Any]]) -> list[Change]:
+    changes: list[Change] = []
     for sku in sorted(new.keys() - old.keys()):
-        p = new[sku]
-        messages.append(f"🆕 新上架\n{p['title']}\nNT${p['price']:,}\n{p['url']}")
+        changes.append(Change("added", new[sku]))
     for sku in sorted(old.keys() & new.keys()):
         before, after = old[sku], new[sku]
         if int(before["price"]) != int(after["price"]):
-            direction = "📉 降價" if int(after["price"]) < int(before["price"]) else "📈 漲價"
-            messages.append(
-                f"{direction}\n{after['title']}\n"
-                f"NT${int(before['price']):,} → NT${int(after['price']):,}\n{after['url']}"
-            )
+            kind = "decreased" if int(after["price"]) < int(before["price"]) else "increased"
+            changes.append(Change(kind, after, int(before["price"])))
     for sku in sorted(old.keys() - new.keys()):
-        p = old[sku]
-        messages.append(f"❌ 已下架\n{p['title']}\n原價 NT${int(p['price']):,}\n{p['url']}")
-    return messages
+        changes.append(Change("removed", old[sku]))
+    return changes
 
 
-def chunks(items: list[str], limit: int = 3900) -> list[str]:
+def format_change(change: Change) -> str:
+    product = change.product
+    price = int(product["price"])
+    if change.kind == "removed":
+        price_line = f"原價 NT${price:,}"
+    elif change.kind in {"decreased", "increased"}:
+        price_line = f"NT${change.old_price:,} → NT${price:,}"
+    else:
+        price_line = f"NT${price:,}"
+    return f"{product['title']}\n{price_line}\n{product['url']}"
+
+
+def chunks(changes: list[Change], limit: int = 3900) -> list[str]:
+    groups = (
+        ("added", "🆕 新上架"),
+        ("removed", "❌ 已下架"),
+        ("decreased", "📉 降價"),
+        ("increased", "📈 漲價"),
+    )
+    grouped = {kind: [change for change in changes if change.kind == kind] for kind, _ in groups}
+    counts = "｜".join(f"{label} {len(grouped[kind])}" for kind, label in groups)
+    header = f"🍎 Apple 台灣整修品更新\n{counts}\n\n"
+
     result: list[str] = []
-    current = "🍎 Apple 台灣整修品更新\n\n"
-    for item in items:
-        addition = item + "\n\n"
-        if len(current) + len(addition) > limit and current.strip():
-            result.append(current.rstrip())
-            current = "🍎 Apple 台灣整修品更新（續）\n\n"
-        current += addition
-    if current.strip():
+    current = header
+    for kind, label in groups:
+        if not grouped[kind]:
+            continue
+        section_heading = f"{label}（{len(grouped[kind])}）\n"
+        for index, change in enumerate(grouped[kind]):
+            addition = (section_heading if index == 0 else "") + format_change(change) + "\n\n"
+            if len(current) + len(addition) > limit and current != header:
+                result.append(current.rstrip())
+                current = f"🍎 Apple 台灣整修品更新（續）\n{counts}\n\n{section_heading}"
+                addition = format_change(change) + "\n\n"
+            elif len(current) + len(addition) > limit:
+                # Apple product titles and URLs are normally short; retain the
+                # complete change even if one exceptional item exceeds limit.
+                result.append(current.rstrip())
+                current = f"🍎 Apple 台灣整修品更新（續）\n{counts}\n\n{section_heading}"
+                addition = format_change(change) + "\n\n"
+            current += addition
+    if current != header:
         result.append(current.rstrip())
     return result
 

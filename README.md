@@ -1,6 +1,6 @@
 # Apple 台灣整修品 Telegram 監控器
 
-每 15 分鐘在 GitHub Actions 檢查 Apple 台灣官方整修品商店，偵測新上架、下架和價格變化，只有變化時才傳 Telegram。
+每小時第 17 分在 GitHub Actions 檢查 Apple 台灣官方整修品商店，偵測新上架、下架、降價和漲價。只有變化時才傳 Telegram，單次通知會彙總各類變化數量，價格異動會顯示舊價 → 新價。
 
 ## 部署
 
@@ -48,5 +48,6 @@ DRY_RUN=true python3 apple_refurb_monitor.py
 ## 注意事項
 
 - GitHub 的排程可能延遲數分鐘，不保證準點。
+- Telegram 單則訊息有長度限制；大量商品同時變動時會自動分成續篇，每則仍會保留完整變動數量。
 - 公開 repository 若長期沒有活動，GitHub 可能停用排程；定期確認 Actions 狀態。
 - Apple 調整頁面資料格式時，程式會停止並發錯誤通知，不會把全部商品誤報為下架。

@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from apple_refurb_monitor import BOOTSTRAP_MARKER, Settings, compare, matches, parse_products
+from apple_refurb_monitor import BOOTSTRAP_MARKER, Settings, chunks, compare, matches, parse_products
 
 
 def page_with(tiles):
@@ -29,17 +29,30 @@ class MonitorTests(unittest.TestCase):
 
     def test_compare_all_change_types(self):
         old = {
-            "SAME": {"sku": "SAME", "title": "Same", "price": 100, "url": "u"},
+            "DOWN": {"sku": "DOWN", "title": "Cheaper", "price": 100, "url": "down"},
+            "UP": {"sku": "UP", "title": "Costlier", "price": 100, "url": "up"},
             "GONE": {"sku": "GONE", "title": "Gone", "price": 200, "url": "u"},
         }
         new = {
-            "SAME": {"sku": "SAME", "title": "Same", "price": 80, "url": "u"},
+            "DOWN": {"sku": "DOWN", "title": "Cheaper", "price": 80, "url": "down"},
+            "UP": {"sku": "UP", "title": "Costlier", "price": 120, "url": "up"},
             "NEW": {"sku": "NEW", "title": "New", "price": 300, "url": "u"},
         }
-        output = "\n".join(compare(old, new))
-        self.assertIn("新上架", output)
-        self.assertIn("降價", output)
-        self.assertIn("已下架", output)
+        changes = compare(old, new)
+        self.assertEqual([change.kind for change in changes], ["added", "decreased", "increased", "removed"])
+        self.assertEqual(changes[1].old_price, 100)
+        self.assertEqual(changes[2].old_price, 100)
+
+        output = "\n".join(chunks(changes))
+        self.assertIn("🆕 新上架 1", output)
+        self.assertIn("❌ 已下架 1", output)
+        self.assertIn("📉 降價 1", output)
+        self.assertIn("📈 漲價 1", output)
+        self.assertIn("NT$100 → NT$80", output)
+        self.assertIn("NT$100 → NT$120", output)
+
+    def test_chunks_returns_no_message_without_changes(self):
+        self.assertEqual(chunks([]), [])
 
     def test_filters(self):
         settings = Settings(("mac",), ("macbook",), ("air",), 50000, None, "", "", True, True)  # type: ignore[arg-type]
