@@ -1,6 +1,6 @@
 # Apple 台灣整修品 Telegram 監控器
 
-每小時第 17 分在 GitHub Actions 檢查 Apple 台灣官方整修品商店，偵測新上架、下架、降價和漲價。只有變化時才傳 Telegram，單次通知會彙總各類變化數量，價格異動會顯示舊價 → 新價。
+Google Apps Script 每小時觸發 GitHub Actions 檢查 Apple 台灣官方整修品商店，偵測新上架、下架、降價和漲價。只有變化時才傳 Telegram，單次通知會彙總各類變化數量，價格異動會顯示舊價 → 新價。
 
 ## 部署
 
@@ -45,9 +45,18 @@ python3 -m unittest discover -s tests -v
 DRY_RUN=true python3 apple_refurb_monitor.py
 ```
 
+## Google Apps Script 外部排程
+
+`google_apps_script/Code.gs` 可以每小時呼叫 GitHub `workflow_dispatch`，避免單純依賴 GitHub Actions 排程。Apps Script 專案需要：
+
+1. 在 Script Properties 設定 `GITHUB_TOKEN`，Token 僅授予此 repository 的 Actions 寫入權限。
+2. 手動執行 `triggerAppleRefurbMonitor` 驗證 GitHub workflow 可成功啟動。
+3. 執行 `installHourlyTrigger` 建立唯一的每小時觸發器。
+
+注意：Apps Script 的每小時觸發時間可能在小時內浮動，不保證固定分鐘。本專案不再使用 GitHub 原生 `schedule`，避免重複觸發。
+
 ## 注意事項
 
-- GitHub 的排程可能延遲數分鐘，不保證準點。
+- Apps Script 每小時觸發器不保證在固定分鐘執行。
 - Telegram 單則訊息有長度限制；大量商品同時變動時會自動分成續篇，每則仍會保留完整變動數量。
-- 公開 repository 若長期沒有活動，GitHub 可能停用排程；定期確認 Actions 狀態。
 - Apple 調整頁面資料格式時，程式會停止並發錯誤通知，不會把全部商品誤報為下架。
