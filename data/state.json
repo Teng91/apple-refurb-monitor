@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-10-15T10:21:25.088381+00:00",
-  "product_count": 66,
+  "checked_at": "2026-10-15T13:21:26.403711+00:00",
+  "product_count": 65,
   "products": {
     "FDH74TA/A": {
       "sku": "FDH74TA/A",
@@ -182,13 +182,6 @@
       "title": "24 吋 iMac Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、Gigabit 乙太網路 - 藍色 (整修品)",
       "price": 49000,
       "url": "https://www.apple.com/tw/shop/product/fwv13ta/a/24-%E5%90%8B-imac-apple-m4-%E6%99%B6%E7%89%87-%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-cpu-%E8%88%87-10-%E6%A0%B8%E5%BF%83-gpu-gigabit-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E8%97%8D%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "mac"
-    },
-    "FWV63TA/A": {
-      "sku": "FWV63TA/A",
-      "title": "24 吋 iMac Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、Gigabit 乙太網路 - 紫色 (整修品)",
-      "price": 49000,
-      "url": "https://www.apple.com/tw/shop/product/fwv63ta/a/24-%E5%90%8B-imac-apple-m4-%E6%99%B6%E7%89%87-%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-cpu-%E8%88%87-10-%E6%A0%B8%E5%BF%83-gpu-gigabit-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E7%B4%AB%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "FX2F3TA/A": {
