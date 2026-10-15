@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-10-15T13:21:26.403711+00:00",
-  "product_count": 65,
+  "checked_at": "2026-10-15T17:21:28.583681+00:00",
+  "product_count": 63,
   "products": {
     "FDH74TA/A": {
       "sku": "FDH74TA/A",
@@ -112,13 +112,6 @@
       "title": "MacBook Neo Apple A18 Pro - 青橘黃色 (整修品)",
       "price": 19600,
       "url": "https://www.apple.com/tw/shop/product/fhfd4ta/a/MacBook-Neo-Apple-A18-Pro-%E6%99%B6%E7%89%87-%E9%9D%92%E6%A9%98%E9%BB%83%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "mac"
-    },
-    "FHFE4TA/A": {
-      "sku": "FHFE4TA/A",
-      "title": "含 Touch ID 的 MacBook Neo Apple A18 Pro 晶片 - 青橘黃色 (整修品)",
-      "price": 22000,
-      "url": "https://www.apple.com/tw/shop/product/fhfe4ta/a/%E5%90%AB-Touch-ID-%E7%9A%84-MacBook-Neo-Apple-A18-Pro-%E6%99%B6%E7%89%87-%E9%9D%92%E6%A9%98%E9%BB%83%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "FHFF4TA/A": {
@@ -343,13 +336,6 @@
       "title": "13 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 天藍色 (整修品)",
       "price": 42900,
       "url": "https://www.apple.com/tw/shop/product/g1h80ta/a/13-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%A9%E8%97%8D%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
-      "category": "mac"
-    },
-    "G1H94TA/A": {
-      "sku": "G1H94TA/A",
-      "title": "13 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 天藍色 (整修品)",
-      "price": 69700,
-      "url": "https://www.apple.com/tw/shop/product/g1h94ta/a/13-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%A9%E8%97%8D%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
       "category": "mac"
     },
     "G1JV1TA/A": {
