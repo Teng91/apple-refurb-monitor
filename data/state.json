@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-10-16T15:21:25.613833+00:00",
-  "product_count": 60,
+  "checked_at": "2026-10-16T17:21:24.214000+00:00",
+  "product_count": 59,
   "products": {
     "FDH74TA/A": {
       "sku": "FDH74TA/A",
@@ -329,13 +329,6 @@
       "title": "13 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 天藍色 (整修品)",
       "price": 42900,
       "url": "https://www.apple.com/tw/shop/product/g1h80ta/a/13-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%A9%E8%97%8D%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
-      "category": "mac"
-    },
-    "G1JV1TA/A": {
-      "sku": "G1JV1TA/A",
-      "title": "Mac mini Apple M4 Pro 晶片配備 12 核心 CPU 與 16 核心 GPU、乙太網路 (整修品)",
-      "price": 73500,
-      "url": "https://www.apple.com/tw/shop/product/g1jv1ta/a/Mac-mini-Apple-M4-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-12-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-16-%E6%A0%B8%E5%BF%83-GPU%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "G1K12TA/A": {
