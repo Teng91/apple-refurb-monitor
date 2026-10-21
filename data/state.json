@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-10-20T19:21:26.591571+00:00",
-  "product_count": 61,
+  "checked_at": "2026-10-21T01:21:25.506981+00:00",
+  "product_count": 63,
   "products": {
     "FC6K4TA/A": {
       "sku": "FC6K4TA/A",
@@ -36,6 +36,20 @@
       "price": 45800,
       "url": "https://www.apple.com/tw/shop/product/fc7d4ta/a/15-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%A9%E8%97%8D%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
       "category": "mac"
+    },
+    "FDEW4TA/A": {
+      "sku": "FDEW4TA/A",
+      "title": "HomePod (第 2 代) - 午夜色 (整修品)",
+      "price": 9400,
+      "url": "https://www.apple.com/tw/shop/product/fdew4ta/a/HomePod-%E7%AC%AC-2-%E4%BB%A3-%E5%8D%88%E5%A4%9C%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "accessories"
+    },
+    "FDEY4TA/A": {
+      "sku": "FDEY4TA/A",
+      "title": "HomePod (第 2 代) - 白色 (整修品)",
+      "price": 9400,
+      "url": "https://www.apple.com/tw/shop/product/fdey4ta/a/HomePod-%E7%AC%AC-2-%E4%BB%A3-%E7%99%BD%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "accessories"
     },
     "FDH74TA/A": {
       "sku": "FDH74TA/A",
