@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-10-21T17:21:24.365874+00:00",
-  "product_count": 58,
+  "checked_at": "2026-10-22T02:21:23.917133+00:00",
+  "product_count": 64,
   "products": {
     "FC6K4TA/A": {
       "sku": "FC6K4TA/A",
@@ -29,6 +29,20 @@
       "price": 45800,
       "url": "https://www.apple.com/tw/shop/product/fc7d4ta/a/15-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%A9%E8%97%8D%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
       "category": "mac"
+    },
+    "FC9X4TA/A": {
+      "sku": "FC9X4TA/A",
+      "title": "11 吋 iPad Air (M3) Wi-Fi 128GB - 藍色 (整修品)",
+      "price": 19500,
+      "url": "https://www.apple.com/tw/shop/product/fc9x4ta/a/11-%E5%90%8B-iPad-Air-M3-Wi-Fi-128GB-%E8%97%8D%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "ipad"
+    },
+    "FC9Y4TA/A": {
+      "sku": "FC9Y4TA/A",
+      "title": "11 吋 iPad Air (M3) Wi-Fi 128GB - 星光色 (整修品)",
+      "price": 19500,
+      "url": "https://www.apple.com/tw/shop/product/fc9y4ta/a/11-%E5%90%8B-iPad-Air-M3-Wi-Fi-128GB-%E6%98%9F%E5%85%89%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "ipad"
     },
     "FDEW4TA/A": {
       "sku": "FDEW4TA/A",
@@ -155,6 +169,34 @@
       "price": 22000,
       "url": "https://www.apple.com/tw/shop/product/fhfj4ta/a/13-%E5%90%8B-macbook-neo-%E8%83%AD%E7%B2%89%E8%89%B2",
       "category": "mac"
+    },
+    "FNYC3TA/A": {
+      "sku": "FNYC3TA/A",
+      "title": "11 吋 iPad Pro Wi-Fi + 行動網路 128GB (第 4 代) 太空灰色 (整修品)",
+      "price": 27500,
+      "url": "https://www.apple.com/tw/shop/product/fnyc3ta/a/11-%E5%90%8B-iPad-Pro-Wi-Fi-%E8%A1%8C%E5%8B%95%E7%B6%B2%E8%B7%AF-128GB-%E7%AC%AC-4-%E4%BB%A3-%E5%A4%AA%E7%A9%BA%E7%81%B0%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "ipad"
+    },
+    "FNYD3TA/A": {
+      "sku": "FNYD3TA/A",
+      "title": "11 吋 iPad Pro Wi-Fi + 行動網路 128GB (第 4 代) 銀色 (整修品)",
+      "price": 27500,
+      "url": "https://www.apple.com/tw/shop/product/fnyd3ta/a/11-%E5%90%8B-iPad-Pro-Wi-Fi-%E8%A1%8C%E5%8B%95%E7%B6%B2%E8%B7%AF-128GB-%E7%AC%AC-4-%E4%BB%A3-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "ipad"
+    },
+    "FNYE3TA/A": {
+      "sku": "FNYE3TA/A",
+      "title": "11 吋 iPad Pro Wi-Fi + 行動網路 256GB (第 4 代) 太空灰色 (整修品)",
+      "price": 30500,
+      "url": "https://www.apple.com/tw/shop/product/fnye3ta/a/11-%E5%90%8B-iPad-Pro-Wi-Fi-%E8%A1%8C%E5%8B%95%E7%B6%B2%E8%B7%AF-256GB-%E7%AC%AC-4-%E4%BB%A3-%E5%A4%AA%E7%A9%BA%E7%81%B0%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "ipad"
+    },
+    "FNYF3TA/A": {
+      "sku": "FNYF3TA/A",
+      "title": "11 吋 iPad Pro Wi-Fi + 行動網路 256GB (第 4 代) 銀色 (整修品)",
+      "price": 30500,
+      "url": "https://www.apple.com/tw/shop/product/fnyf3ta/a/11-%E5%90%8B-iPad-Pro-Wi-Fi-%E8%A1%8C%E5%8B%95%E7%B6%B2%E8%B7%AF-256GB-%E7%AC%AC-4-%E4%BB%A3-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "ipad"
     },
     "FVW23TA/A": {
       "sku": "FVW23TA/A",
