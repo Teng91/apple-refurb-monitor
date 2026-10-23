@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-10-22T19:21:25.738307+00:00",
-  "product_count": 63,
+  "checked_at": "2026-10-23T11:21:24.896390+00:00",
+  "product_count": 62,
   "products": {
     "FC6K4TA/A": {
       "sku": "FC6K4TA/A",
@@ -35,13 +35,6 @@
       "title": "11 吋 iPad Air (M3) Wi-Fi 128GB - 藍色 (整修品)",
       "price": 19500,
       "url": "https://www.apple.com/tw/shop/product/fc9x4ta/a/11-%E5%90%8B-iPad-Air-M3-Wi-Fi-128GB-%E8%97%8D%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "ipad"
-    },
-    "FC9Y4TA/A": {
-      "sku": "FC9Y4TA/A",
-      "title": "11 吋 iPad Air (M3) Wi-Fi 128GB - 星光色 (整修品)",
-      "price": 19500,
-      "url": "https://www.apple.com/tw/shop/product/fc9y4ta/a/11-%E5%90%8B-iPad-Air-M3-Wi-Fi-128GB-%E6%98%9F%E5%85%89%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "ipad"
     },
     "FDEW4TA/A": {
