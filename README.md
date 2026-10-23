@@ -55,6 +55,12 @@ DRY_RUN=true python3 apple_refurb_monitor.py
 
 注意：Apps Script 的每小時觸發時間可能在小時內浮動，不保證固定分鐘。本專案不再使用 GitHub 原生 `schedule`，避免重複觸發。
 
+### 每日 Health 通知
+
+執行一次 `installDailyHealthTrigger`，加入台北時間每天午夜附近的獨立觸發器（Google `nearMinute(0)` 約有正負 15 分鐘誤差，GitHub 排隊可能再延遲）。它呼叫 `triggerDailyHealthCheck`，帶入 `health_check: true`；每小時一般檢查不發 Health。
+
+午夜檢查成功後，即使沒有商品異動，也會收到 Telegram Health 通知，包含本次成功檢查時間與追蹤商品數。檢查失敗時只發錯誤通知，不發健康成功通知。這證明本次流程成功，不代表過去 24 小時每次排程都成功；若 Google 排程本身停止，Health 也不會送出。
+
 ## 注意事項
 
 - Apps Script 每小時觸發器不保證在固定分鐘執行。

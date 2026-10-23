@@ -1,7 +1,10 @@
 import json
 import unittest
+from dataclasses import replace
+from pathlib import Path
+from unittest.mock import patch
 
-from apple_refurb_monitor import BOOTSTRAP_MARKER, Settings, chunks, compare, matches, parse_products
+from apple_refurb_monitor import BOOTSTRAP_MARKER, Settings, chunks, compare, main, matches, parse_products
 
 
 def page_with(tiles):
@@ -58,6 +61,41 @@ class MonitorTests(unittest.TestCase):
         settings = Settings(("mac",), ("macbook",), ("air",), 50000, None, "", "", True, True)  # type: ignore[arg-type]
         self.assertTrue(matches({"title": "MacBook Pro", "sku": "X", "price": 40000}, settings))
         self.assertFalse(matches({"title": "MacBook Air", "sku": "Y", "price": 40000}, settings))
+
+    def run_monitor(self, *, health=False, failure=False, previous=True):
+        settings = Settings(("mac",), (), (), None, Path("unused.json"), "token", "chat", False, False)
+        products = parse_products(page_with([tile()]), "mac")
+        with patch("apple_refurb_monitor.Settings.from_env", return_value=replace(settings, health_check=health)), \
+             patch("apple_refurb_monitor.collect", return_value=products, side_effect=ValueError("store unavailable") if failure else None), \
+             patch("apple_refurb_monitor.load_state", return_value=products if previous else None), \
+             patch("apple_refurb_monitor.save_state"), \
+             patch("apple_refurb_monitor.telegram_send") as send:
+            result = main()
+        return result, [call.args[0] for call in send.call_args_list]
+
+    def test_health_sent_without_product_changes(self):
+        result, messages = self.run_monitor(health=True)
+        self.assertEqual(result, 0)
+        self.assertEqual(len(messages), 1)
+        self.assertIn("Health", messages[0])
+        self.assertIn("目前追蹤：1 項商品", messages[0])
+        self.assertIn("（台北）", messages[0])
+
+    def test_regular_run_stays_silent_without_changes(self):
+        self.assertEqual(self.run_monitor(), (0, []))
+
+    def test_failed_check_never_sends_healthy_message(self):
+        result, messages = self.run_monitor(health=True, failure=True)
+        self.assertEqual(result, 1)
+        self.assertEqual(len(messages), 1)
+        self.assertIn("執行失敗", messages[0])
+        self.assertNotIn("Health", messages[0])
+
+    def test_first_run_also_sends_requested_health(self):
+        result, messages = self.run_monitor(health=True, previous=False)
+        self.assertEqual(result, 0)
+        self.assertEqual(len(messages), 1)
+        self.assertIn("Health", messages[0])
 
 
 if __name__ == "__main__":

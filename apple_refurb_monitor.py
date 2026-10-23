@@ -15,6 +15,7 @@ from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin
 from urllib.request import Request, urlopen
+from zoneinfo import ZoneInfo
 
 
 BASE_URL = "https://www.apple.com"
@@ -34,6 +35,7 @@ class Settings:
     telegram_chat_id: str
     notify_first_run: bool
     dry_run: bool
+    health_check: bool = False
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -51,6 +53,7 @@ class Settings:
             telegram_chat_id=os.getenv("TELEGRAM_CHAT_ID", "").strip(),
             notify_first_run=os.getenv("NOTIFY_ON_FIRST_RUN", "true").lower() in {"1", "true", "yes"},
             dry_run=os.getenv("DRY_RUN", "false").lower() in {"1", "true", "yes"},
+            health_check=os.getenv("HEALTH_CHECK", "false").lower() in {"1", "true", "yes"},
         )
 
 
@@ -227,22 +230,32 @@ def main() -> int:
     settings = Settings.from_env()
     try:
         current = collect(settings)
+        checked_at = datetime.now(ZoneInfo("Asia/Taipei"))
         previous = load_state(settings.state_file)
         if previous is None:
             save_state(settings.state_file, current)
             print(f"建立基準資料，共 {len(current)} 項")
             if settings.notify_first_run:
                 telegram_send(f"✅ Apple 整修品監控已啟動\n目前追蹤 {len(current)} 項商品。", settings)
-            return 0
-
-        changes = compare(previous, current)
-        if changes:
-            save_state(settings.state_file, current)
-            for message in chunks(changes):
-                telegram_send(message, settings)
-            print(f"已通知 {len(changes)} 項變化")
         else:
-            print(f"沒有變化，目前追蹤 {len(current)} 項商品")
+            changes = compare(previous, current)
+            if changes:
+                save_state(settings.state_file, current)
+                for message in chunks(changes):
+                    telegram_send(message, settings)
+                print(f"已通知 {len(changes)} 項變化")
+            else:
+                print(f"沒有變化，目前追蹤 {len(current)} 項商品")
+        if settings.health_check:
+            telegram_send(
+                "💚 Apple 整修品監控 Health\n"
+                "本次商品檢查成功\n"
+                f"成功檢查時間：{checked_at:%Y-%m-%d %H:%M:%S}（台北）\n"
+                f"目前追蹤：{len(current)} 項商品\n"
+                "每小時檢查，商品異動另行通知。",
+                settings,
+            )
+            print("已傳送 Health 通知")
         return 0
     except Exception as exc:
         print(f"錯誤: {exc}", file=sys.stderr)
