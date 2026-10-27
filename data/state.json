@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-10-27T10:21:23.889885+00:00",
-  "product_count": 81,
+  "checked_at": "2026-10-27T11:21:24.748137+00:00",
+  "product_count": 78,
   "products": {
     "FC6K4TA/A": {
       "sku": "FC6K4TA/A",
@@ -112,20 +112,6 @@
       "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
       "price": 42200,
       "url": "https://www.apple.com/tw/shop/product/fdv94ta/a",
-      "category": "mac"
-    },
-    "FDVH4TA/A": {
-      "sku": "FDVH4TA/A",
-      "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
-      "price": 42200,
-      "url": "https://www.apple.com/tw/shop/product/fdvh4ta/a",
-      "category": "mac"
-    },
-    "FDVN4TA/A": {
-      "sku": "FDVN4TA/A",
-      "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
-      "price": 57300,
-      "url": "https://www.apple.com/tw/shop/product/fdvn4ta/a",
       "category": "mac"
     },
     "FDVQ4TA/A": {
@@ -539,13 +525,6 @@
       "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
       "price": 72200,
       "url": "https://www.apple.com/tw/shop/product/g1ls0ta/a",
-      "category": "mac"
-    },
-    "G1LW0TA/A": {
-      "sku": "G1LW0TA/A",
-      "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
-      "price": 48200,
-      "url": "https://www.apple.com/tw/shop/product/g1lw0ta/a",
       "category": "mac"
     },
     "G1LY0TA/A": {
