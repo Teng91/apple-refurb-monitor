@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-10-28T07:21:22.818794+00:00",
-  "product_count": 71,
+  "checked_at": "2026-10-28T11:21:22.969340+00:00",
+  "product_count": 70,
   "products": {
     "FC6K4TA/A": {
       "sku": "FC6K4TA/A",
@@ -189,13 +189,6 @@
       "title": "MacBook Neo Apple A18 Pro 晶片 - 靛青色 (整修品)",
       "price": 20490,
       "url": "https://www.apple.com/tw/shop/product/fhff4ta/a/MacBook-Neo-Apple-A18-Pro-%E6%99%B6%E7%89%87-%E9%9D%9B%E9%9D%92%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "mac"
-    },
-    "FHFG4TA/A": {
-      "sku": "FHFG4TA/A",
-      "title": "含 Touch ID 的 MacBook Neo Apple A18 Pro 晶片 - 靛青色 (整修品)",
-      "price": 22790,
-      "url": "https://www.apple.com/tw/shop/product/fhfg4ta/a/%E5%90%AB-Touch-ID-%E7%9A%84-MacBook-Neo-Apple-A18-Pro-%E6%99%B6%E7%89%87-%E9%9D%9B%E9%9D%92%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "FHFH4TA/A": {
