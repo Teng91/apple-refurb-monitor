@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-10-28T13:21:24.559075+00:00",
-  "product_count": 68,
+  "checked_at": "2026-10-28T15:21:29.435097+00:00",
+  "product_count": 67,
   "products": {
     "FC6K4TA/A": {
       "sku": "FC6K4TA/A",
@@ -91,13 +91,6 @@
       "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
       "price": 42200,
       "url": "https://www.apple.com/tw/shop/product/fdv94ta/a",
-      "category": "mac"
-    },
-    "FDVQ4TA/A": {
-      "sku": "FDVQ4TA/A",
-      "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 天藍色 (整修品)",
-      "price": 42200,
-      "url": "https://www.apple.com/tw/shop/product/fdvq4ta/a",
       "category": "mac"
     },
     "FDVU4TA/A": {
@@ -268,6 +261,13 @@
       "url": "https://www.apple.com/tw/shop/product/fx2g3ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M4-Max-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-14-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-32-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
+    "FX2H3TA/A": {
+      "sku": "FX2H3TA/A",
+      "title": "14 吋 MacBook Pro Apple M4 Pro 晶片配備 12 核心 CPU 與 16 核心 GPU - 太空黑色 (整修品)",
+      "price": 60400,
+      "url": "https://www.apple.com/tw/shop/product/fx2h3ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M4-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-12-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-16-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%AA%E7%A9%BA%E9%BB%91%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
     "FX2J3TA/A": {
       "sku": "FX2J3TA/A",
       "title": "14 吋 MacBook Pro Apple M4 Pro 晶片配備 14 核心 CPU 與 20 核心 GPU - 太空黑色 (整修品)",
@@ -434,13 +434,6 @@
       "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 星光色 (整修品)",
       "price": 45400,
       "url": "https://www.apple.com/tw/shop/product/g1l31ta/a",
-      "category": "mac"
-    },
-    "G1L61TA/A": {
-      "sku": "G1L61TA/A",
-      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
-      "price": 45400,
-      "url": "https://www.apple.com/tw/shop/product/g1l61ta/a",
       "category": "mac"
     },
     "G1L91TA/A": {
