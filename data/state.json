@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-01T14:21:27.316314+00:00",
-  "product_count": 50,
+  "checked_at": "2026-11-01T17:21:24.928464+00:00",
+  "product_count": 49,
   "products": {
     "FC6K4TA/A": {
       "sku": "FC6K4TA/A",
@@ -29,13 +29,6 @@
       "price": 9400,
       "url": "https://www.apple.com/tw/shop/product/fdey4ta/a/HomePod-%E7%AC%AC-2-%E4%BB%A3-%E7%99%BD%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "accessories"
-    },
-    "FDH84TA/A": {
-      "sku": "FDH84TA/A",
-      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
-      "price": 45400,
-      "url": "https://www.apple.com/tw/shop/product/fdh84ta/a",
-      "category": "mac"
     },
     "FDHC4TA/A": {
       "sku": "FDHC4TA/A",
