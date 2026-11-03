@@ -1,12 +1,19 @@
 {
-  "checked_at": "2026-11-03T09:21:30.397641+00:00",
-  "product_count": 75,
+  "checked_at": "2026-11-03T10:21:25.196166+00:00",
+  "product_count": 112,
   "products": {
-    "FC6C4TA/A": {
-      "sku": "FC6C4TA/A",
-      "title": "13 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
-      "price": 39900,
-      "url": "https://www.apple.com/tw/shop/product/fc6c4ta/a/13-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%8D%88%E5%A4%9C%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
+    "FC6K4TA/A": {
+      "sku": "FC6K4TA/A",
+      "title": "15 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 星光色 (整修品)",
+      "price": 45800,
+      "url": "https://www.apple.com/tw/shop/product/fc6k4ta/a/15-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E6%98%9F%E5%85%89%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
+      "category": "mac"
+    },
+    "FC6L4TA/A": {
+      "sku": "FC6L4TA/A",
+      "title": "15 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
+      "price": 45800,
+      "url": "https://www.apple.com/tw/shop/product/fc6l4ta/a/15-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%8D%88%E5%A4%9C%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
       "category": "mac"
     },
     "FC6T4TA/A": {
@@ -23,11 +30,25 @@
       "url": "https://www.apple.com/tw/shop/product/fde14ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%AA%E7%A9%BA%E9%BB%91%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
+    "FDE34TA/A": {
+      "sku": "FDE34TA/A",
+      "title": "14 吋 MacBook Pro Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 太空黑色 (整修品)",
+      "price": 58200,
+      "url": "https://www.apple.com/tw/shop/product/fde34ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%AA%E7%A9%BA%E9%BB%91%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
     "FDE54TA/A": {
       "sku": "FDE54TA/A",
       "title": "14 吋 MacBook Pro Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
       "price": 52200,
       "url": "https://www.apple.com/tw/shop/product/fde54ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "FDE64TA/A": {
+      "sku": "FDE64TA/A",
+      "title": "14 吋 MacBook Pro Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
+      "price": 58200,
+      "url": "https://www.apple.com/tw/shop/product/fde64ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "FDEW4TA/A": {
@@ -72,6 +93,13 @@
       "url": "https://www.apple.com/tw/shop/product/fdhc4ta/a",
       "category": "mac"
     },
+    "FDHD4TA/A": {
+      "sku": "FDHD4TA/A",
+      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 星光色 (整修品)",
+      "price": 51300,
+      "url": "https://www.apple.com/tw/shop/product/fdhd4ta/a",
+      "category": "mac"
+    },
     "FDHE4TA/A": {
       "sku": "FDHE4TA/A",
       "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 8 核心 GPU - 午夜色 (整修品)",
@@ -84,6 +112,13 @@
       "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
       "price": 45400,
       "url": "https://www.apple.com/tw/shop/product/fdhf4ta/a",
+      "category": "mac"
+    },
+    "FDHG4TA/A": {
+      "sku": "FDHG4TA/A",
+      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
+      "price": 51300,
+      "url": "https://www.apple.com/tw/shop/product/fdhg4ta/a",
       "category": "mac"
     },
     "FDHH4TA/A": {
@@ -100,6 +135,20 @@
       "url": "https://www.apple.com/tw/shop/product/fdhj4ta/a",
       "category": "mac"
     },
+    "FDHK4TA/A": {
+      "sku": "FDHK4TA/A",
+      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 天藍色 (整修品)",
+      "price": 51300,
+      "url": "https://www.apple.com/tw/shop/product/fdhk4ta/a",
+      "category": "mac"
+    },
+    "FDVA4TA/A": {
+      "sku": "FDVA4TA/A",
+      "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
+      "price": 51300,
+      "url": "https://www.apple.com/tw/shop/product/fdva4ta/a",
+      "category": "mac"
+    },
     "FDVC4TA/A": {
       "sku": "FDVC4TA/A",
       "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
@@ -112,6 +161,13 @@
       "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 星光色 (整修品)",
       "price": 42200,
       "url": "https://www.apple.com/tw/shop/product/fdvd4ta/a",
+      "category": "mac"
+    },
+    "FDVF4TA/A": {
+      "sku": "FDVF4TA/A",
+      "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 星光色 (整修品)",
+      "price": 57300,
+      "url": "https://www.apple.com/tw/shop/product/fdvf4ta/a",
       "category": "mac"
     },
     "FDVH4TA/A": {
@@ -275,6 +331,27 @@
       "url": "https://www.apple.com/tw/shop/product/fnyf3ta/a/11-%E5%90%8B-iPad-Pro-Wi-Fi-%E8%A1%8C%E5%8B%95%E7%B6%B2%E8%B7%AF-256GB-%E7%AC%AC-4-%E4%BB%A3-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "ipad"
     },
+    "FU963TA/A": {
+      "sku": "FU963TA/A",
+      "title": "Mac Studio Apple M4 Max 晶片配備 14 核心 CPU 與 32 核心 GPU (整修品)",
+      "price": 66200,
+      "url": "https://www.apple.com/tw/shop/product/fu963ta/a/Mac-Studio-Apple-M4-Max-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-14-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-32-%E6%A0%B8%E5%BF%83-GPU-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "FU973TA/A": {
+      "sku": "FU973TA/A",
+      "title": "Mac Studio Apple M3 Ultra 晶片配備 28 核心 CPU 與 60 核心 GPU (整修品)",
+      "price": 157000,
+      "url": "https://www.apple.com/tw/shop/product/fu973ta/a/Mac-Studio-Apple-M3-Ultra-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-28-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-60-%E6%A0%B8%E5%BF%83-GPU-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "FU9D3TA/A": {
+      "sku": "FU9D3TA/A",
+      "title": "Mac mini Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、乙太網路 (整修品)",
+      "price": 22900,
+      "url": "https://www.apple.com/tw/shop/product/fu9d3ta/a/Mac-mini-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
     "FVW23TA/A": {
       "sku": "FVW23TA/A",
       "title": "11 吋 iPad Pro (M4) Wi-Fi + 行動網路機型 256GB 配備標準玻璃 - 銀色 (整修品)",
@@ -296,6 +373,27 @@
       "url": "https://www.apple.com/tw/shop/product/fw133ta/a/13-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%8D%88%E5%A4%9C%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
       "category": "mac"
     },
+    "FW1G3TA/A": {
+      "sku": "FW1G3TA/A",
+      "title": "15 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
+      "price": 33900,
+      "url": "https://www.apple.com/tw/shop/product/fw1g3ta/a/15-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
+      "category": "mac"
+    },
+    "FW1L3TA/A": {
+      "sku": "FW1L3TA/A",
+      "title": "15 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
+      "price": 33900,
+      "url": "https://www.apple.com/tw/shop/product/fw1l3ta/a/15-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%8D%88%E5%A4%9C%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
+      "category": "mac"
+    },
+    "FW1M3TA/A": {
+      "sku": "FW1M3TA/A",
+      "title": "15 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
+      "price": 39900,
+      "url": "https://www.apple.com/tw/shop/product/fw1m3ta/a/15-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%8D%88%E5%A4%9C%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
+      "category": "mac"
+    },
     "FWUU3TA/A": {
       "sku": "FWUU3TA/A",
       "title": "24 吋 iMac Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、Gigabit 乙太網路 - 銀色 (整修品)",
@@ -310,6 +408,13 @@
       "url": "https://www.apple.com/tw/shop/product/fwv13ta/a/24-%E5%90%8B-imac-apple-m4-%E6%99%B6%E7%89%87-%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-cpu-%E8%88%87-10-%E6%A0%B8%E5%BF%83-gpu-gigabit-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E8%97%8D%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
+    "FX2E3TA/A": {
+      "sku": "FX2E3TA/A",
+      "title": "14 吋 MacBook Pro Apple M4 Pro 晶片配備 12 核心 CPU 與 16 核心 GPU - 銀色 (整修品)",
+      "price": 60400,
+      "url": "https://www.apple.com/tw/shop/product/fx2e3ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M4-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-12-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-16-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
     "FX2F3TA/A": {
       "sku": "FX2F3TA/A",
       "title": "14 吋 MacBook Pro Apple M4 Pro 晶片配備 14 核心 CPU 與 20 核心 GPU - 銀色 (整修品)",
@@ -322,6 +427,13 @@
       "title": "14 吋 MacBook Pro Apple M4 Max 晶片配備 14 核心 CPU 與 32 核心 GPU - 銀色 (整修品)",
       "price": 101300,
       "url": "https://www.apple.com/tw/shop/product/fx2g3ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M4-Max-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-14-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-32-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "FX2H3TA/A": {
+      "sku": "FX2H3TA/A",
+      "title": "14 吋 MacBook Pro Apple M4 Pro 晶片配備 12 核心 CPU 與 16 核心 GPU - 太空黑色 (整修品)",
+      "price": 60400,
+      "url": "https://www.apple.com/tw/shop/product/fx2h3ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M4-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-12-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-16-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%AA%E7%A9%BA%E9%BB%91%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "FX2J3TA/A": {
@@ -366,6 +478,13 @@
       "url": "https://www.apple.com/tw/shop/product/fx2w3ta/a/16-%E5%90%8B-MacBook-Pro-Apple-M4-Max-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-16-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-40-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
+    "FX2X3TA/A": {
+      "sku": "FX2X3TA/A",
+      "title": "16 吋 MacBook Pro Apple M4 Pro 晶片配備 14 核心 CPU 與 20 核心 GPU - 太空黑色 (整修品)",
+      "price": 73600,
+      "url": "https://www.apple.com/tw/shop/product/fx2x3ta/a/16-%E5%90%8B-MacBook-Pro-Apple-M4-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-14-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-20-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%AA%E7%A9%BA%E9%BB%91%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
     "FX2Y3TA/A": {
       "sku": "FX2Y3TA/A",
       "title": "16 吋 MacBook Pro Apple M4 Pro 晶片配備 14 核心 CPU 與 20 核心 GPU - 太空黑色 (整修品)",
@@ -385,6 +504,34 @@
       "title": "16 吋 MacBook Pro Apple M4 Max 晶片配備 16 核心 CPU 與 40 核心 GPU - 太空黑色 (整修品)",
       "price": 127100,
       "url": "https://www.apple.com/tw/shop/product/fx313ta/a/16-%E5%90%8B-MacBook-Pro-Apple-M4-Max-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-16-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-40-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%AA%E7%A9%BA%E9%BB%91%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "G1CD3TA/A": {
+      "sku": "G1CD3TA/A",
+      "title": "Mac Studio Apple M4 Max 晶片配備 14 核心 CPU 與 32 核心 GPU (整修品)",
+      "price": 75100,
+      "url": "https://www.apple.com/tw/shop/product/g1cd3ta/a/Mac-Studio-Apple-M4-Max-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-14-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-32-%E6%A0%B8%E5%BF%83-GPU-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "G1CE0TA/A": {
+      "sku": "G1CE0TA/A",
+      "title": "Mac Studio Apple M3 Ultra 晶片配備 28 核心 CPU 與 60 核心 GPU (整修品)",
+      "price": 276000,
+      "url": "https://www.apple.com/tw/shop/product/g1ce0ta/a/Mac-Studio-Apple-M3-Ultra-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-28-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-60-%E6%A0%B8%E5%BF%83-GPU-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "G1CF5TA/A": {
+      "sku": "G1CF5TA/A",
+      "title": "Mac mini Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、10Gb 乙太網路 (整修品)",
+      "price": 31800,
+      "url": "https://www.apple.com/tw/shop/product/g1cf5ta/a/Mac-mini-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU10Gb-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "G1CF9TA/A": {
+      "sku": "G1CF9TA/A",
+      "title": "Mac mini Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、乙太網路 (整修品)",
+      "price": 28800,
+      "url": "https://www.apple.com/tw/shop/product/g1cf9ta/a/Mac-mini-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "G1CW0TA/A": {
@@ -429,6 +576,48 @@
       "url": "https://www.apple.com/tw/shop/product/g1h80ta/a/13-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%A9%E8%97%8D%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
       "category": "mac"
     },
+    "G1HD0TA/A": {
+      "sku": "G1HD0TA/A",
+      "title": "15 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 天藍色 (整修品)",
+      "price": 39900,
+      "url": "https://www.apple.com/tw/shop/product/g1hd0ta/a/15-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%A9%E8%97%8D%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
+      "category": "mac"
+    },
+    "G1JV1TA/A": {
+      "sku": "G1JV1TA/A",
+      "title": "Mac mini Apple M4 Pro 晶片配備 12 核心 CPU 與 16 核心 GPU、乙太網路 (整修品)",
+      "price": 73500,
+      "url": "https://www.apple.com/tw/shop/product/g1jv1ta/a/Mac-mini-Apple-M4-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-12-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-16-%E6%A0%B8%E5%BF%83-GPU%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "G1JV7TA/A": {
+      "sku": "G1JV7TA/A",
+      "title": "Mac mini Apple M4 Pro 晶片配備 14 核心 CPU 與 20 核心 GPU、乙太網路 (整修品)",
+      "price": 79400,
+      "url": "https://www.apple.com/tw/shop/product/g1jv7ta/a/Mac-mini-Apple-M4-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-14-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-20-%E6%A0%B8%E5%BF%83-GPU%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "G1JV8TA/A": {
+      "sku": "G1JV8TA/A",
+      "title": "Mac mini Apple M4 Pro 晶片配備 14 核心 CPU 與 20 核心 GPU、10Gb 乙太網路 (整修品)",
+      "price": 82400,
+      "url": "https://www.apple.com/tw/shop/product/g1jv8ta/a/Mac-mini-Apple-M4-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-14-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-20-%E6%A0%B8%E5%BF%83-GPU10Gb-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "G1JVJTA/A": {
+      "sku": "G1JVJTA/A",
+      "title": "Mac mini Apple M4 Pro 晶片配備 14 核心 CPU 與 20 核心 GPU、乙太網路 (整修品)",
+      "price": 94300,
+      "url": "https://www.apple.com/tw/shop/product/g1jvjta/a/Mac-mini-Apple-M4-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-14-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-20-%E6%A0%B8%E5%BF%83-GPU%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "G1JX0TA/A": {
+      "sku": "G1JX0TA/A",
+      "title": "Mac mini Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、10Gb 乙太網路 (整修品)",
+      "price": 46700,
+      "url": "https://www.apple.com/tw/shop/product/g1jx0ta/a/Mac-mini-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU10Gb-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
     "G1K12TA/A": {
       "sku": "G1K12TA/A",
       "title": "24 吋 iMac Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、Gigabit 乙太網路、奈米紋理玻璃 - 銀色 (整修品)",
@@ -457,11 +646,46 @@
       "url": "https://www.apple.com/tw/shop/product/g1kk2ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%AA%E7%A9%BA%E9%BB%91%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
-    "G1KN2TA/A": {
-      "sku": "G1KN2TA/A",
-      "title": "14 吋 MacBook Pro Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
-      "price": 64200,
-      "url": "https://www.apple.com/tw/shop/product/g1kn2ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+    "G1KZCTA/A": {
+      "sku": "G1KZCTA/A",
+      "title": "Mac mini Apple M4 Pro 晶片配備 14 核心 CPU 與 20 核心 GPU、乙太網路 (整修品)",
+      "price": 70500,
+      "url": "https://www.apple.com/tw/shop/product/g1kzcta/a/Mac-mini-Apple-M4-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-14-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-20-%E6%A0%B8%E5%BF%83-GPU%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "G1KZLTA/A": {
+      "sku": "G1KZLTA/A",
+      "title": "Mac mini Apple M4 Pro 晶片配備 12 核心 CPU 與 16 核心 GPU、乙太網路 (整修品)",
+      "price": 64600,
+      "url": "https://www.apple.com/tw/shop/product/g1kzlta/a/Mac-mini-Apple-M4-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-12-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-16-%E6%A0%B8%E5%BF%83-GPU%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
+      "category": "mac"
+    },
+    "G1L00TA/A": {
+      "sku": "G1L00TA/A",
+      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
+      "price": 39300,
+      "url": "https://www.apple.com/tw/shop/product/g1l00ta/a",
+      "category": "mac"
+    },
+    "G1L01TA/A": {
+      "sku": "G1L01TA/A",
+      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
+      "price": 45400,
+      "url": "https://www.apple.com/tw/shop/product/g1l01ta/a",
+      "category": "mac"
+    },
+    "G1L22TA/A": {
+      "sku": "G1L22TA/A",
+      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
+      "price": 57300,
+      "url": "https://www.apple.com/tw/shop/product/g1l22ta/a",
+      "category": "mac"
+    },
+    "G1L30TA/A": {
+      "sku": "G1L30TA/A",
+      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 星光色 (整修品)",
+      "price": 39300,
+      "url": "https://www.apple.com/tw/shop/product/g1l30ta/a",
       "category": "mac"
     },
     "G1L31TA/A": {
@@ -471,11 +695,46 @@
       "url": "https://www.apple.com/tw/shop/product/g1l31ta/a",
       "category": "mac"
     },
+    "G1L60TA/A": {
+      "sku": "G1L60TA/A",
+      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
+      "price": 39300,
+      "url": "https://www.apple.com/tw/shop/product/g1l60ta/a",
+      "category": "mac"
+    },
+    "G1L61TA/A": {
+      "sku": "G1L61TA/A",
+      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
+      "price": 45400,
+      "url": "https://www.apple.com/tw/shop/product/g1l61ta/a",
+      "category": "mac"
+    },
+    "G1L62TA/A": {
+      "sku": "G1L62TA/A",
+      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
+      "price": 51300,
+      "url": "https://www.apple.com/tw/shop/product/g1l62ta/a",
+      "category": "mac"
+    },
+    "G1L90TA/A": {
+      "sku": "G1L90TA/A",
+      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 天藍色 (整修品)",
+      "price": 39300,
+      "url": "https://www.apple.com/tw/shop/product/g1l90ta/a",
+      "category": "mac"
+    },
     "G1L91TA/A": {
       "sku": "G1L91TA/A",
       "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 天藍色 (整修品)",
       "price": 45400,
       "url": "https://www.apple.com/tw/shop/product/g1l91ta/a",
+      "category": "mac"
+    },
+    "G1LQ1TA/A": {
+      "sku": "G1LQ1TA/A",
+      "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
+      "price": 54100,
+      "url": "https://www.apple.com/tw/shop/product/g1lq1ta/a",
       "category": "mac"
     },
     "G1LS0TA/A": {
@@ -492,11 +751,11 @@
       "url": "https://www.apple.com/tw/shop/product/g1ly0ta/a",
       "category": "mac"
     },
-    "G1MHETA/A": {
-      "sku": "G1MHETA/A",
-      "title": "14 吋 MacBook Pro Apple M5 Pro 晶片配備 15 核心 CPU 與 16 核心 GPU - 銀色 (整修品)",
-      "price": 89900,
-      "url": "https://www.apple.com/tw/shop/product/g1mheta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-15-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-16-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
+    "G1M22TA/A": {
+      "sku": "G1M22TA/A",
+      "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 天藍色 (整修品)",
+      "price": 63300,
+      "url": "https://www.apple.com/tw/shop/product/g1m22ta/a",
       "category": "mac"
     },
     "G1MHFTA/A": {
