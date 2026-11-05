@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-05T08:21:26.958518+00:00",
-  "product_count": 87,
+  "checked_at": "2026-11-05T10:21:23.072928+00:00",
+  "product_count": 86,
   "products": {
     "FC6K4TA/A": {
       "sku": "FC6K4TA/A",
@@ -427,13 +427,6 @@
       "title": "Mac mini Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、10Gb 乙太網路 (整修品)",
       "price": 31800,
       "url": "https://www.apple.com/tw/shop/product/g1cf5ta/a/Mac-mini-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU10Gb-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "mac"
-    },
-    "G1CF9TA/A": {
-      "sku": "G1CF9TA/A",
-      "title": "Mac mini Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、乙太網路 (整修品)",
-      "price": 28800,
-      "url": "https://www.apple.com/tw/shop/product/g1cf9ta/a/Mac-mini-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "G1CW0TA/A": {
