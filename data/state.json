@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-06T16:08:02.626829+00:00",
-  "product_count": 76,
+  "checked_at": "2026-11-06T17:21:23.714044+00:00",
+  "product_count": 75,
   "products": {
     "FC6K4TA/A": {
       "sku": "FC6K4TA/A",
@@ -281,13 +281,6 @@
       "price": 36100,
       "url": "https://www.apple.com/tw/shop/product/fvw23ta/a/11-%E5%90%8B-iPad-Pro-M4-Wi-Fi-%E8%A1%8C%E5%8B%95%E7%B6%B2%E8%B7%AF%E6%A9%9F%E5%9E%8B-256GB-%E9%85%8D%E5%82%99%E6%A8%99%E6%BA%96%E7%8E%BB%E7%92%83-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "ipad"
-    },
-    "FW1M3TA/A": {
-      "sku": "FW1M3TA/A",
-      "title": "15 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
-      "price": 39900,
-      "url": "https://www.apple.com/tw/shop/product/fw1m3ta/a/15-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%8D%88%E5%A4%9C%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
-      "category": "mac"
     },
     "FWUU3TA/A": {
       "sku": "FWUU3TA/A",
