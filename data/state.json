@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-08T11:21:24.307476+00:00",
-  "product_count": 69,
+  "checked_at": "2026-11-08T14:21:22.472646+00:00",
+  "product_count": 67,
   "products": {
     "FC6K4TA/A": {
       "sku": "FC6K4TA/A",
@@ -149,13 +149,6 @@
       "url": "https://www.apple.com/tw/shop/product/fdvh4ta/a",
       "category": "mac"
     },
-    "FDVQ4TA/A": {
-      "sku": "FDVQ4TA/A",
-      "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 天藍色 (整修品)",
-      "price": 42200,
-      "url": "https://www.apple.com/tw/shop/product/fdvq4ta/a",
-      "category": "mac"
-    },
     "FFEL4TA/A": {
       "sku": "FFEL4TA/A",
       "title": "Studio Display XDR - 標準玻璃 - 可調整斜度與高度的支架 (整修品)",
@@ -253,13 +246,6 @@
       "price": 30500,
       "url": "https://www.apple.com/tw/shop/product/fnyf3ta/a/11-%E5%90%8B-iPad-Pro-Wi-Fi-%E8%A1%8C%E5%8B%95%E7%B6%B2%E8%B7%AF-256GB-%E7%AC%AC-4-%E4%BB%A3-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "ipad"
-    },
-    "FU9D3TA/A": {
-      "sku": "FU9D3TA/A",
-      "title": "Mac mini Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、乙太網路 (整修品)",
-      "price": 22900,
-      "url": "https://www.apple.com/tw/shop/product/fu9d3ta/a/Mac-mini-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "mac"
     },
     "FVW23TA/A": {
       "sku": "FVW23TA/A",
