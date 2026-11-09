@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-09T06:21:23.535300+00:00",
-  "product_count": 61,
+  "checked_at": "2026-11-09T07:21:23.716681+00:00",
+  "product_count": 60,
   "products": {
     "FC6K4TA/A": {
       "sku": "FC6K4TA/A",
@@ -141,13 +141,6 @@
       "price": 53290,
       "url": "https://www.apple.com/tw/shop/product/fff14ta/a/Studio-Display-%E5%A5%88%E7%B1%B3%E7%B4%8B%E7%90%86%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "accessories"
-    },
-    "FGDT4TA/A": {
-      "sku": "FGDT4TA/A",
-      "title": "14 吋 MacBook Pro Apple M5 Pro 晶片配備 18 核心 CPU 與 20 核心 GPU - 太空黑色 (整修品)",
-      "price": 93400,
-      "url": "https://www.apple.com/tw/shop/product/fgdt4ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-Pro-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-18-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-20-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%AA%E7%A9%BA%E9%BB%91%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "mac"
     },
     "FGDU4TA/A": {
       "sku": "FGDU4TA/A",
