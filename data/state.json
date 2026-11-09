@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-09T07:21:23.716681+00:00",
-  "product_count": 60,
+  "checked_at": "2026-11-09T08:21:23.402360+00:00",
+  "product_count": 59,
   "products": {
     "FC6K4TA/A": {
       "sku": "FC6K4TA/A",
@@ -49,13 +49,6 @@
       "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 8 核心 GPU - 銀色 (整修品)",
       "price": 36300,
       "url": "https://www.apple.com/tw/shop/product/fdh74ta/a",
-      "category": "mac"
-    },
-    "FDH94TA/A": {
-      "sku": "FDH94TA/A",
-      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
-      "price": 51300,
-      "url": "https://www.apple.com/tw/shop/product/fdh94ta/a",
       "category": "mac"
     },
     "FDHC4TA/A": {
