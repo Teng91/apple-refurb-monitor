@@ -1,19 +1,12 @@
 {
-  "checked_at": "2026-11-10T05:21:23.887731+00:00",
-  "product_count": 69,
+  "checked_at": "2026-11-10T06:21:22.710434+00:00",
+  "product_count": 68,
   "products": {
     "FC6K4TA/A": {
       "sku": "FC6K4TA/A",
       "title": "15 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 星光色 (整修品)",
       "price": 45800,
       "url": "https://www.apple.com/tw/shop/product/fc6k4ta/a/15-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E6%98%9F%E5%85%89%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
-      "category": "mac"
-    },
-    "FC6L4TA/A": {
-      "sku": "FC6L4TA/A",
-      "title": "15 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 午夜色 (整修品)",
-      "price": 45800,
-      "url": "https://www.apple.com/tw/shop/product/fc6l4ta/a/15-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%8D%88%E5%A4%9C%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
       "category": "mac"
     },
     "FDE14TA/A": {
