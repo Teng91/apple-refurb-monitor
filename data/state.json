@@ -1,14 +1,7 @@
 {
-  "checked_at": "2026-11-12T05:21:23.631283+00:00",
-  "product_count": 54,
+  "checked_at": "2026-11-12T07:21:31.914088+00:00",
+  "product_count": 52,
   "products": {
-    "FDE14TA/A": {
-      "sku": "FDE14TA/A",
-      "title": "14 吋 MacBook Pro Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 太空黑色 (整修品)",
-      "price": 52200,
-      "url": "https://www.apple.com/tw/shop/product/fde14ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%AA%E7%A9%BA%E9%BB%91%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "mac"
-    },
     "FDEW4TA/A": {
       "sku": "FDEW4TA/A",
       "title": "HomePod (第 2 代) - 午夜色 (整修品)",
@@ -44,11 +37,11 @@
       "url": "https://www.apple.com/tw/shop/product/fdhj4ta/a",
       "category": "mac"
     },
-    "FDVA4TA/A": {
-      "sku": "FDVA4TA/A",
+    "FDV94TA/A": {
+      "sku": "FDV94TA/A",
       "title": "15 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
-      "price": 51300,
-      "url": "https://www.apple.com/tw/shop/product/fdva4ta/a",
+      "price": 42200,
+      "url": "https://www.apple.com/tw/shop/product/fdv94ta/a",
       "category": "mac"
     },
     "FDVH4TA/A": {
@@ -126,13 +119,6 @@
       "title": "MacBook Neo Apple A18 Pro 晶片 - 靛青色 (整修品)",
       "price": 20490,
       "url": "https://www.apple.com/tw/shop/product/fhff4ta/a/MacBook-Neo-Apple-A18-Pro-%E6%99%B6%E7%89%87-%E9%9D%9B%E9%9D%92%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "mac"
-    },
-    "FHFG4TA/A": {
-      "sku": "FHFG4TA/A",
-      "title": "含 Touch ID 的 MacBook Neo Apple A18 Pro 晶片 - 靛青色 (整修品)",
-      "price": 22790,
-      "url": "https://www.apple.com/tw/shop/product/fhfg4ta/a/%E5%90%AB-Touch-ID-%E7%9A%84-MacBook-Neo-Apple-A18-Pro-%E6%99%B6%E7%89%87-%E9%9D%9B%E9%9D%92%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "FHFH4TA/A": {
