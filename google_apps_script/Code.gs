@@ -1,18 +1,10 @@
 const GITHUB_REPOSITORY = 'Teng91/apple-refurb-monitor';
 const GITHUB_WORKFLOW = 'monitor.yml';
 const GITHUB_REF = 'main';
+const MONITOR_INTERVAL_HOURS = 2;
 
 /** Trigger the Apple refurbished monitor workflow on GitHub Actions. */
 function triggerAppleRefurbMonitor() {
-  dispatchMonitor_(false);
-}
-
-/** Daily health check: GitHub sends Telegram only after checking Apple. */
-function triggerDailyHealthCheck() {
-  dispatchMonitor_(true);
-}
-
-function dispatchMonitor_(healthCheck) {
   const token = PropertiesService.getScriptProperties().getProperty('GITHUB_TOKEN');
   if (!token) {
     throw new Error('Missing GITHUB_TOKEN in Script Properties.');
@@ -28,7 +20,7 @@ function dispatchMonitor_(healthCheck) {
       Authorization: 'Bearer ' + token,
       'X-GitHub-Api-Version': '2026-03-10',
     },
-    payload: JSON.stringify({ref: GITHUB_REF, inputs: {health_check: healthCheck}}),
+    payload: JSON.stringify({ref: GITHUB_REF}),
     muteHttpExceptions: true,
   });
 
@@ -40,38 +32,22 @@ function dispatchMonitor_(healthCheck) {
   console.log('GitHub workflow dispatched successfully (' + status + ').');
 }
 
-/** Add one daily trigger near midnight, without touching the hourly trigger. */
-function installDailyHealthTrigger() {
-  const exists = ScriptApp.getProjectTriggers().some(function(trigger) {
-    return trigger.getHandlerFunction() === 'triggerDailyHealthCheck';
-  });
-  if (!exists) {
-    ScriptApp.newTrigger('triggerDailyHealthCheck')
-        .timeBased()
-        .inTimezone('Asia/Taipei')
-        .atHour(0)
-        .nearMinute(0)
-        .everyDays(1)
-        .create();
-  }
-  console.log('Daily health trigger ready (Asia/Taipei, midnight +/- 15 minutes).');
-}
-
-/** Install exactly one hourly trigger for the monitor. */
-function installHourlyTrigger() {
-  removeHourlyTrigger();
+/** Install exactly one monitor trigger, every MONITOR_INTERVAL_HOURS hours. */
+function installMonitorTrigger() {
+  removeMonitorTriggers();
   ScriptApp.newTrigger('triggerAppleRefurbMonitor')
       .timeBased()
-      .everyHours(1)
+      .everyHours(MONITOR_INTERVAL_HOURS)
       .create();
-  console.log('Hourly trigger installed.');
+  console.log('Monitor trigger installed (every ' + MONITOR_INTERVAL_HOURS + ' hours).');
 }
 
-/** Remove this project's monitor triggers. */
-function removeHourlyTrigger() {
+/** Remove this project's monitor triggers, including the retired daily health trigger. */
+function removeMonitorTriggers() {
+  const handlers = ['triggerAppleRefurbMonitor', 'triggerDailyHealthCheck'];
   ScriptApp.getProjectTriggers()
       .filter(function(trigger) {
-        return trigger.getHandlerFunction() === 'triggerAppleRefurbMonitor';
+        return handlers.indexOf(trigger.getHandlerFunction()) !== -1;
       })
       .forEach(function(trigger) {
         ScriptApp.deleteTrigger(trigger);

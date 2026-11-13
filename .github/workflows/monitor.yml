@@ -2,12 +2,6 @@ name: Apple Refurbished Monitor
 
 on:
   workflow_dispatch:
-    inputs:
-      health_check:
-        description: Send a health notification after a successful store check
-        type: boolean
-        required: false
-        default: false
 
 permissions:
   contents: write
@@ -38,7 +32,6 @@ jobs:
           EXCLUDE_KEYWORDS: ${{ vars.EXCLUDE_KEYWORDS }}
           MAX_PRICE_TWD: ${{ vars.MAX_PRICE_TWD }}
           NOTIFY_ON_FIRST_RUN: "true"
-          HEALTH_CHECK: ${{ inputs.health_check }}
         run: python apple_refurb_monitor.py
 
       - name: Persist latest product snapshot

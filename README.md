@@ -1,6 +1,6 @@
 # Apple 台灣整修品 Telegram 監控器
 
-Google Apps Script 每小時觸發 GitHub Actions 檢查 Apple 台灣官方整修品商店，偵測新上架、下架、降價和漲價。只有變化時才傳 Telegram，單次通知會彙總各類變化數量，價格異動會顯示舊價 → 新價。
+Google Apps Script 每 2 小時觸發 GitHub Actions 檢查 Apple 台灣官方整修品商店，偵測新上架、下架、降價和漲價。只有變化時才傳 Telegram，單次通知會彙總各類變化數量，價格異動會顯示舊價 → 新價。
 
 ## 部署
 
@@ -47,22 +47,16 @@ DRY_RUN=true python3 apple_refurb_monitor.py
 
 ## Google Apps Script 外部排程
 
-`google_apps_script/Code.gs` 可以每小時呼叫 GitHub `workflow_dispatch`，避免單純依賴 GitHub Actions 排程。Apps Script 專案需要：
+`google_apps_script/Code.gs` 每 2 小時呼叫 GitHub `workflow_dispatch`，避免單純依賴 GitHub Actions 排程。間隔由檔案開頭的 `MONITOR_INTERVAL_HOURS` 控制（Apps Script 只接受 1、2、4、6、8、12）。Apps Script 專案需要：
 
 1. 在 Script Properties 設定 `GITHUB_TOKEN`，Token 僅授予此 repository 的 Actions 寫入權限。
 2. 手動執行 `triggerAppleRefurbMonitor` 驗證 GitHub workflow 可成功啟動。
-3. 執行 `installHourlyTrigger` 建立唯一的每小時觸發器。
+3. 執行 `installMonitorTrigger` 建立唯一的監控觸發器。它會先清除舊的監控觸發器（包含已停用的每日 Health 觸發器 `triggerDailyHealthCheck`），再建立新的。
 
-注意：Apps Script 的每小時觸發時間可能在小時內浮動，不保證固定分鐘。本專案不再使用 GitHub 原生 `schedule`，避免重複觸發。
-
-### 每日 Health 通知
-
-執行一次 `installDailyHealthTrigger`，加入台北時間每天午夜附近的獨立觸發器（Google `nearMinute(0)` 約有正負 15 分鐘誤差，GitHub 排隊可能再延遲）。它呼叫 `triggerDailyHealthCheck`，帶入 `health_check: true`；每小時一般檢查不發 Health。
-
-午夜檢查成功後，即使沒有商品異動，也會收到 Telegram Health 通知，包含本次成功檢查時間與追蹤商品數。檢查失敗時只發錯誤通知，不發健康成功通知。這證明本次流程成功，不代表過去 24 小時每次排程都成功；若 Google 排程本身停止，Health 也不會送出。
+注意：Apps Script 的觸發時間可能浮動，不保證固定分鐘。本專案不再使用 GitHub 原生 `schedule`，避免重複觸發。
 
 ## 注意事項
 
-- Apps Script 每小時觸發器不保證在固定分鐘執行。
+- Apps Script 觸發器不保證在固定分鐘執行。
 - Telegram 單則訊息有長度限制；大量商品同時變動時會自動分成續篇，每則仍會保留完整變動數量。
 - Apple 調整頁面資料格式時，程式會停止並發錯誤通知，不會把全部商品誤報為下架。
