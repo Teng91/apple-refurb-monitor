@@ -57,14 +57,14 @@ flowchart LR
 
 ### 2. 設定 GitHub
 
-1. 把這個專案推到自己的 GitHub repository。
+1. Fork 這個專案（或推到自己的 GitHub repository）。Fork 的 repository 預設停用 Actions，到 **Actions** 頁面按啟用。
 2. **Settings → Secrets and variables → Actions → Secrets**，新增 `TELEGRAM_BOT_TOKEN` 與 `TELEGRAM_CHAT_ID`。
 3. （選用）在同一頁的 **Variables** 設定[篩選條件](#篩選條件)。
 4. **Actions → Apple Refurbished Monitor → Run workflow** 手動執行一次：第一次會建立基準資料並傳送「已啟動」通知。勾選 `health_check` 再執行一次，可以先看看 Health 通知長什麼樣子。
 
 ### 3. 設定 Google Apps Script 排程
 
-1. 到 [script.google.com](https://script.google.com) 建立專案，把 `google_apps_script/Code.gs` 的內容整個貼上。
+1. 到 [script.google.com](https://script.google.com) 建立專案，把 `google_apps_script/Code.gs` 的內容整個貼上，**把開頭的 `GITHUB_REPOSITORY` 改成你自己的 `帳號/repository名稱`**（不改的話會去觸發原作者的 repository，GitHub 會回 404）。
 2. 建立 GitHub fine-grained token：**Settings → Developer settings → Personal access tokens → Fine-grained tokens**，Repository access 只選這個 repository，權限只給 **Actions: Read and write**（觸發 workflow 需要）。記下到期日。
 3. Apps Script 的 **專案設定 → 指令碼屬性**，新增 `GITHUB_TOKEN`，值貼上剛才的 token。
 4. 手動執行一次 `triggerAppleRefurbMonitor`（第一次會要求授權），到 GitHub 的 Actions 頁面確認有一次新的執行。
@@ -74,6 +74,8 @@ flowchart LR
 
 | 設定 | 預設 | 說明 |
 |---|---|---|
+| `GITHUB_REPOSITORY` | `Teng91/apple-refurb-monitor` | 要觸發的 repository，換成你自己的 |
+| `GITHUB_REF` | `main` | 在哪個分支上執行 workflow |
 | `MONITOR_INTERVAL_HOURS` | `1` | 幾小時檢查一次（Apps Script 只接受 1、2、4、6、8、12） |
 | `HEALTH_HOUR` | `0` | 每天台北時間幾點傳健康通知（0–23） |
 
@@ -94,7 +96,9 @@ flowchart LR
 
 ## 本機測試
 
-只用 Python 標準函式庫，不需要安裝任何套件：
+只用 Python 標準函式庫（GitHub Actions 上是 Python 3.12），不需要安裝任何套件。
+
+macOS / Linux / Git Bash：
 
 ```bash
 python3 -m unittest discover -s tests -v
@@ -102,7 +106,25 @@ DRY_RUN=true python3 apple_refurb_monitor.py                     # 實際讀取 
 DRY_RUN=true HEALTH_CHECK=true python3 apple_refurb_monitor.py   # 連 Health 通知一起看
 ```
 
-`DRY_RUN` 只是不傳 Telegram，照樣會比對並更新 `data/state.json`。不想改到快照的話，先 `mkdir -p work && cp data/state.json work/`，再加上 `STATE_FILE=work/state.json` 執行（`work/` 不會被 commit）。
+Windows PowerShell：
+
+```powershell
+python -m unittest discover -s tests -v
+$env:DRY_RUN = "true"; python apple_refurb_monitor.py
+```
+
+`DRY_RUN` 只是不傳 Telegram，照樣會比對並更新 `data/state.json`。不想改到快照的話，把 `data/state.json` 複製到 `work/`，再設定 `STATE_FILE=work/state.json` 執行（`work/` 不會被 commit）。
+
+程式讀取的環境變數：
+
+| 環境變數 | 預設 | 說明 |
+|---|---|---|
+| `TELEGRAM_BOT_TOKEN`、`TELEGRAM_CHAT_ID` | （無） | Telegram 傳送用；`DRY_RUN` 時不需要 |
+| `APPLE_CATEGORIES`、`INCLUDE_KEYWORDS`、`EXCLUDE_KEYWORDS`、`MAX_PRICE_TWD` | 見[篩選條件](#篩選條件) | 篩選條件 |
+| `STATE_FILE` | `data/state.json` | 快照檔位置 |
+| `NOTIFY_ON_FIRST_RUN` | `true` | 第一次建立基準時要不要傳「已啟動」通知 |
+| `HEALTH_CHECK` | `false` | 檢查成功後多傳一則 Health 通知 |
+| `DRY_RUN` | `false` | Telegram 訊息只印出來，不真的傳 |
 
 ## 檔案
 
@@ -130,6 +152,15 @@ DRY_RUN=true HEALTH_CHECK=true python3 apple_refurb_monitor.py   # 連 Health �
 
 ## 注意事項
 
-- 這個 repository 是公開的：程式碼、`data/state.json` 與 Actions 的執行紀錄任何人都看得到。Bot Token、Chat ID 存在 Secrets，不會公開；執行紀錄裡出現時會自動遮蔽。
+### 公開 repository 的安全性
+
+- 程式碼、`data/state.json`、commit 紀錄（包含作者 email）與 Actions 執行紀錄任何人都看得到。
+- Bot Token、Chat ID 存在 GitHub Secrets，不會公開；就算出現在執行紀錄裡也會自動遮蔽。觸發用的 GitHub token 只存在 Apps Script 的指令碼屬性，不在 repository 裡。
+- workflow 只接受 `workflow_dispatch`：只有對 repository 有寫入權限的人（或持有 token 的 Apps Script）能觸發。別人 fork 或開 PR 都不會執行這個 workflow，也拿不到你的 Secrets。
+- Apps Script 用的 token 只給這一個 repository 的 **Actions: Read and write**，就算外洩也只能觸發或取消 workflow，改不了程式碼。到期前記得換新。
+- 建議到 **Settings → Advanced Security**（舊版介面叫 Code security）開啟 Secret scanning 與 Push protection（公開 repository 免費），避免不小心 commit 出 token。
+
+### 其他
+
 - Apps Script 的觸發器不保證固定在哪一分鐘執行。
 - 健康檢查那一次也會完整檢查商品，有變化一樣會通知。
