@@ -1,5 +1,7 @@
 import json
 import unittest
+from dataclasses import replace
+from datetime import datetime
 from pathlib import Path
 from unittest.mock import patch
 
@@ -61,16 +63,50 @@ class MonitorTests(unittest.TestCase):
         self.assertTrue(matches({"title": "MacBook Pro", "sku": "X", "price": 40000}, settings))
         self.assertFalse(matches({"title": "MacBook Air", "sku": "Y", "price": 40000}, settings))
 
-    def run_monitor(self, *, failure=False, previous=True):
+    def run_monitor(self, *, health=False, failure=False, previous=True):
         settings = Settings(("mac",), (), (), None, Path("unused.json"), "token", "chat", False, False)
         products = parse_products(page_with([tile()]), "mac")
-        with patch("apple_refurb_monitor.Settings.from_env", return_value=settings), \
+        with patch("apple_refurb_monitor.Settings.from_env", return_value=replace(settings, health_check=health)), \
              patch("apple_refurb_monitor.collect", return_value=products, side_effect=ValueError("store unavailable") if failure else None), \
              patch("apple_refurb_monitor.load_state", return_value=products if previous else None), \
              patch("apple_refurb_monitor.save_state"), \
              patch("apple_refurb_monitor.telegram_send") as send:
             result = main()
         return result, [call.args[0] for call in send.call_args_list]
+
+    def test_health_sent_without_product_changes(self):
+        result, messages = self.run_monitor(health=True)
+        self.assertEqual(result, 0)
+        self.assertEqual(len(messages), 1)
+        self.assertIn("Health", messages[0])
+        self.assertIn("目前追蹤：1 項商品", messages[0])
+        self.assertIn("（台北）", messages[0])
+        self.assertIn("每小時檢查", messages[0])
+
+    def test_failed_check_never_sends_healthy_message(self):
+        result, messages = self.run_monitor(health=True, failure=True)
+        self.assertEqual(result, 1)
+        self.assertEqual(len(messages), 1)
+        self.assertIn("執行失敗", messages[0])
+        self.assertNotIn("Health", messages[0])
+
+    def test_first_run_also_sends_requested_health(self):
+        result, messages = self.run_monitor(health=True, previous=False)
+        self.assertEqual(result, 0)
+        self.assertEqual(len(messages), 1)
+        self.assertIn("Health", messages[0])
+
+    def test_health_setting_comes_from_environment(self):
+        with patch.dict("os.environ", {"HEALTH_CHECK": "true"}):
+            self.assertTrue(Settings.from_env().health_check)
+        with patch.dict("os.environ", {"HEALTH_CHECK": "false"}):
+            self.assertFalse(Settings.from_env().health_check)
+
+    def test_health_message_uses_taipei_time(self):
+        from apple_refurb_monitor import health_message
+        text = health_message(datetime(2026, 11, 17, 0, 3, 9), 43)
+        self.assertIn("成功檢查時間：2026-11-17 00:03:09（台北）", text)
+        self.assertIn("目前追蹤：43 項商品", text)
 
     def test_regular_run_stays_silent_without_changes(self):
         self.assertEqual(self.run_monitor(), (0, []))

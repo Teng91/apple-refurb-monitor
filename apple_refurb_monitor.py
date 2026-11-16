@@ -9,7 +9,7 @@ import re
 import sys
 import time
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from urllib.error import HTTPError, URLError
@@ -21,6 +21,8 @@ BASE_URL = "https://www.apple.com"
 DEFAULT_CATEGORIES = ("mac", "ipad", "airpods", "homepod", "appletv", "accessories")
 BOOTSTRAP_MARKER = "window.REFURB_GRID_BOOTSTRAP = "
 USER_AGENT = "AppleRefurbMonitor/1.0 (+https://github.com/)"
+# Taiwan has no daylight saving time: a fixed UTC+8 avoids needing the tzdata package on Windows
+TAIPEI = timezone(timedelta(hours=8), "Asia/Taipei")
 
 
 @dataclass(frozen=True)
@@ -34,6 +36,7 @@ class Settings:
     telegram_chat_id: str
     notify_first_run: bool
     dry_run: bool
+    health_check: bool = False
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -51,6 +54,7 @@ class Settings:
             telegram_chat_id=os.getenv("TELEGRAM_CHAT_ID", "").strip(),
             notify_first_run=os.getenv("NOTIFY_ON_FIRST_RUN", "true").lower() in {"1", "true", "yes"},
             dry_run=os.getenv("DRY_RUN", "false").lower() in {"1", "true", "yes"},
+            health_check=os.getenv("HEALTH_CHECK", "false").lower() in {"1", "true", "yes"},
         )
 
 
@@ -223,10 +227,21 @@ def telegram_send(text: str, settings: Settings) -> None:
         raise RuntimeError(f"Telegram 傳送失敗: {result}")
 
 
+def health_message(checked_at: datetime, product_count: int) -> str:
+    return (
+        "💚 Apple 整修品監控 Health\n"
+        "本次商品檢查成功\n"
+        f"成功檢查時間：{checked_at:%Y-%m-%d %H:%M:%S}（台北）\n"
+        f"目前追蹤：{product_count} 項商品\n"
+        "每小時檢查，商品異動另行通知。"
+    )
+
+
 def main() -> int:
     settings = Settings.from_env()
     try:
         current = collect(settings)
+        checked_at = datetime.now(TAIPEI)
         previous = load_state(settings.state_file)
         if previous is None:
             save_state(settings.state_file, current)
@@ -242,6 +257,11 @@ def main() -> int:
                 print(f"已通知 {len(changes)} 項變化")
             else:
                 print(f"沒有變化，目前追蹤 {len(current)} 項商品")
+        if settings.health_check:
+            # Daily health notice (Apps Script dispatches it around midnight Taipei time).
+            # Sent only after a successful store check, so it proves the whole chain still works.
+            telegram_send(health_message(checked_at, len(current)), settings)
+            print("已傳送 Health 通知")
         return 0
     except Exception as exc:
         print(f"錯誤: {exc}", file=sys.stderr)

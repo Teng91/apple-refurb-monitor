@@ -1,63 +1,135 @@
 # Apple 台灣整修品 Telegram 監控器
 
-Google Apps Script 每小時觸發 GitHub Actions 檢查 Apple 台灣官方整修品商店，偵測新上架、下架、降價和漲價。只有變化時才傳 Telegram，單次通知會彙總各類變化數量，價格異動會顯示舊價 → 新價。
+每小時檢查一次 [Apple 台灣官方整修品商店](https://www.apple.com/tw/shop/refurbished)，有新上架、下架、降價或漲價就傳 Telegram 通知你。每天午夜另外傳一則健康通知，讓你知道監控還在運作。
 
-## 部署
+不需要伺服器：排程用 Google Apps Script，檢查在 GitHub Actions 上跑，通知走 Telegram Bot，全部免費。
 
-1. 在 GitHub 建立一個新 repository，把本專案全部檔案推上去。
-2. 在 Telegram 聯絡 `@BotFather`，輸入 `/newbot` 建立 Bot，取得 Bot Token。
-3. 開啟自己的 Bot 並按 **Start**（或傳一則訊息給它）。
-4. 在瀏覽器開啟：
+## 運作方式
+
+```mermaid
+flowchart LR
+  gas["Google Apps Script<br/>每小時・每天 00:00"] -->|workflow_dispatch| gha["GitHub Actions<br/>monitor.yml"]
+  gha --> py["apple_refurb_monitor.py<br/>讀取各分類頁面"]
+  py --> cmp{"和 data/state.json<br/>比對"}
+  cmp -->|有變化| tg["Telegram 通知"]
+  cmp -->|有變化| save["機器人 commit<br/>新的 state.json"]
+  py -->|健康檢查那一次| health["💚 Health 通知"]
+```
+
+1. Apps Script 每小時呼叫 GitHub 的 `workflow_dispatch`，啟動 `monitor.yml`。
+2. `apple_refurb_monitor.py` 讀取 Apple 各分類頁面裡的商品資料（`REFURB_GRID_BOOTSTRAP`），套用篩選條件。
+3. 和上一次存下來的 `data/state.json` 比對：有變化才傳 Telegram，並由 GitHub Actions 機器人把新的快照 commit 回 repository；沒變化就什麼都不做。
+4. 每天台北時間 00:00 左右，Apps Script 另外觸發一次「健康檢查」：一樣完整檢查一次商品，成功後多傳一則 Health 通知。
+
+為什麼不用 GitHub 原生的 `schedule`：它常常延遲好幾個小時、尖峰時段甚至會整次跳過；Apps Script 的觸發器準時得多（誤差約 15 分鐘內）。兩種同時用會重複觸發，所以只用 Apps Script。
+
+## 會收到哪些通知
+
+| 通知 | 什麼時候 |
+|---|---|
+| 🍎 Apple 台灣整修品更新 | 有新上架、下架、降價或漲價時。同一次的變化彙總成一則，開頭列出各類數量；價格異動顯示舊價 → 新價。太長時自動分成續篇，每則都保留完整的數量 |
+| 💚 Apple 整修品監控 Health | 每天台北時間 00:00 左右（前後約 15 分鐘）。只有這次商品檢查成功才傳，內容是檢查時間與目前追蹤幾項商品 |
+| ⚠️ Apple 整修品監控執行失敗 | 讀不到 Apple 的頁面、頁面格式改變等。所有分類都解析不到商品時會停下來報錯，不會把全部商品誤報成下架 |
+| ✅ Apple 整修品監控已啟動 | 第一次執行（還沒有 `data/state.json`）建立基準資料時 |
+
+**哪天午夜沒收到 Health 通知，就代表有地方壞了**，見下面的[疑難排解](#疑難排解)。
+
+## 費用
+
+全部免費：
+
+- **GitHub Actions**：這個 repository 是公開的，Actions 不計分鐘數。私人 repository 也能用，但每次只跑幾秒也會算 1 分鐘，每小時一次一個月約 750 分鐘（免費方案每月 2,000 分鐘）。
+- **Google Apps Script、Telegram Bot**：免費。
+
+## 設定
+
+### 1. 建立 Telegram Bot
+
+1. 在 Telegram 聯絡 `@BotFather`，輸入 `/newbot` 建立 Bot，取得 Bot Token。
+2. 開啟自己的 Bot 並按 **Start**（或傳一則訊息給它）。
+3. 在瀏覽器開啟下面的網址，找到回傳資料中的 `message.chat.id`，這就是 Chat ID：
 
    ```text
    https://api.telegram.org/bot<你的 BOT TOKEN>/getUpdates
    ```
 
-   找到回傳資料中的 `message.chat.id`，這就是 Chat ID。
-5. GitHub repository → **Settings → Secrets and variables → Actions → Secrets**，新增：
+> 不要把 Bot Token 寫進程式或貼到公開的地方。萬一曝光，到 BotFather 撤銷並重新產生。
 
-   - `TELEGRAM_BOT_TOKEN`
-   - `TELEGRAM_CHAT_ID`
+### 2. 設定 GitHub
 
-6. 前往 **Actions → Apple Refurbished Monitor → Run workflow** 手動執行一次。第一次會建立基準資料並傳送啟動通知；此後只有商品變化才通知。
+1. 把這個專案推到自己的 GitHub repository。
+2. **Settings → Secrets and variables → Actions → Secrets**，新增 `TELEGRAM_BOT_TOKEN` 與 `TELEGRAM_CHAT_ID`。
+3. （選用）在同一頁的 **Variables** 設定[篩選條件](#篩選條件)。
+4. **Actions → Apple Refurbished Monitor → Run workflow** 手動執行一次：第一次會建立基準資料並傳送「已啟動」通知。勾選 `health_check` 再執行一次，可以先看看 Health 通知長什麼樣子。
 
-> 不要把 Bot Token 寫進程式或貼到公開訊息。若曾曝光，請到 BotFather 立刻撤銷並重建 Token。
+### 3. 設定 Google Apps Script 排程
 
-## 可選篩選設定
+1. 到 [script.google.com](https://script.google.com) 建立專案，把 `google_apps_script/Code.gs` 的內容整個貼上。
+2. 建立 GitHub fine-grained token：**Settings → Developer settings → Personal access tokens → Fine-grained tokens**，Repository access 只選這個 repository，權限只給 **Actions: Read and write**（觸發 workflow 需要）。記下到期日。
+3. Apps Script 的 **專案設定 → 指令碼屬性**，新增 `GITHUB_TOKEN`，值貼上剛才的 token。
+4. 手動執行一次 `triggerAppleRefurbMonitor`（第一次會要求授權），到 GitHub 的 Actions 頁面確認有一次新的執行。
+5. 執行 `installMonitorTrigger`：建立兩個觸發器，**每小時檢查一次**、**每天台北時間 00:00 健康檢查**。可以重複執行，它會先清掉舊的觸發器再建立。
+
+`Code.gs` 開頭可以調整：
+
+| 設定 | 預設 | 說明 |
+|---|---|---|
+| `MONITOR_INTERVAL_HOURS` | `1` | 幾小時檢查一次（Apps Script 只接受 1、2、4、6、8、12） |
+| `HEALTH_HOUR` | `0` | 每天台北時間幾點傳健康通知（0–23） |
+
+改了之後要再執行一次 `installMonitorTrigger` 才會生效。repository 裡的 `Code.gs` 只是副本，真正在跑的是 Apps Script 專案裡那份：兩邊要一起改。
+
+## 篩選條件
 
 在 GitHub 的 **Settings → Secrets and variables → Actions → Variables** 加入以下任意變數：
 
 | Variable | 範例 | 說明 |
 |---|---|---|
-| `APPLE_CATEGORIES` | `mac,ipad` | 分類：`mac,ipad,airpods,homepod,appletv,accessories` |
+| `APPLE_CATEGORIES` | `mac,ipad` | 要追蹤的分類，預設全部：`mac,ipad,airpods,homepod,appletv,accessories` |
 | `INCLUDE_KEYWORDS` | `MacBook Pro,M5` | 名稱或 SKU 至少包含其中一項 |
 | `EXCLUDE_KEYWORDS` | `Studio Display` | 排除包含任一關鍵字的商品 |
-| `MAX_PRICE_TWD` | `60000` | 只追蹤不超過此台幣價格的商品 |
+| `MAX_PRICE_TWD` | `60000` | 只追蹤不超過這個價格（台幣）的商品 |
 
-多個關鍵字用半形逗號分隔，不分英文大小寫。篩選條件變更後，第一次執行可能會將被排除的舊商品顯示為下架；若不希望收到這批通知，可以刪除 `data/state.json` 後手動執行，重新建立基準。
+多個關鍵字用半形逗號分隔，不分英文大小寫。改了篩選條件之後，下一次執行可能會把被排除的舊商品當成「下架」通知；不想收到這批通知的話，先刪掉 `data/state.json` 再手動執行一次，重新建立基準。
 
 ## 本機測試
 
-不需要安裝第三方套件：
+只用 Python 標準函式庫，不需要安裝任何套件：
 
 ```bash
 python3 -m unittest discover -s tests -v
-DRY_RUN=true python3 apple_refurb_monitor.py
+DRY_RUN=true python3 apple_refurb_monitor.py                     # 實際讀取 Apple 頁面，Telegram 訊息只印出來
+DRY_RUN=true HEALTH_CHECK=true python3 apple_refurb_monitor.py   # 連 Health 通知一起看
 ```
 
-## Google Apps Script 外部排程
+`DRY_RUN` 只是不傳 Telegram，照樣會比對並更新 `data/state.json`。不想改到快照的話，先 `mkdir -p work && cp data/state.json work/`，再加上 `STATE_FILE=work/state.json` 執行（`work/` 不會被 commit）。
 
-`google_apps_script/Code.gs` 每小時呼叫 GitHub `workflow_dispatch`，避免單純依賴 GitHub Actions 排程。間隔由檔案開頭的 `MONITOR_INTERVAL_HOURS` 控制（Apps Script 只接受 1、2、4、6、8、12）。Apps Script 專案需要：
+## 檔案
 
-1. 在 Script Properties 設定 `GITHUB_TOKEN`，Token 僅授予此 repository 的 Actions 寫入權限。
-2. 手動執行 `triggerAppleRefurbMonitor` 驗證 GitHub workflow 可成功啟動。
-3. 執行 `installMonitorTrigger` 建立唯一的監控觸發器。它會先清除舊的監控觸發器（包含已停用的每日 Health 觸發器 `triggerDailyHealthCheck`），再建立新的。
+| 檔案 | 說明 |
+|---|---|
+| `apple_refurb_monitor.py` | 讀取商品、篩選、比對、組 Telegram 訊息（只用 Python 標準函式庫） |
+| `tests/test_monitor.py` | 單元測試：解析、篩選、比對、訊息分段、Health 與錯誤通知 |
+| `data/state.json` | 最新的商品快照；有變化時由 GitHub Actions 機器人 commit。`checked_at` 是最後一次有變化的時間 |
+| `.github/workflows/monitor.yml` | GitHub Actions：執行檢查、把快照 commit 回來；`health_check` 參數決定要不要傳 Health 通知 |
+| `google_apps_script/Code.gs` | Apps Script 排程的原始碼副本：每小時觸發一次、每天午夜觸發一次健康檢查 |
 
-注意：Apps Script 的觸發時間可能浮動，不保證固定分鐘。本專案不再使用 GitHub 原生 `schedule`，避免重複觸發。
+## 疑難排解
+
+**午夜沒收到 Health 通知**
+
+1. 到 GitHub 的 **Actions** 頁面，看 00:00 左右有沒有一次執行。
+   - **沒有**：Apps Script 沒有觸發成功。到 Apps Script 的「執行項目」看錯誤，最常見的是 `GITHUB_TOKEN` 過期（GitHub 回 401），重新產生後更新指令碼屬性。Apps Script 預設也會寄信通知觸發失敗。
+   - **有，但失敗**：通常會收到「執行失敗」的 Telegram 通知；沒收到的話點進那次執行看 log。
+   - **有，而且成功**：檢查 `TELEGRAM_BOT_TOKEN`、`TELEGRAM_CHAT_ID` 兩個 Secrets，以及 Bot 有沒有被封鎖。
+2. 也可以手動執行 `triggerDailyHealthCheck`，或在 Actions 頁面勾選 `health_check` 執行，馬上測一次整條流程。
+
+**一次收到很多「下架」**：多半是剛改了篩選條件，見[篩選條件](#篩選條件)。
+
+**收到「找不到 REFURB_GRID_BOOTSTRAP」**：Apple 改了頁面結構，要更新 `parse_bootstrap`。在修好之前每次執行都會報錯，但不會誤報商品變化。
 
 ## 注意事項
 
-- Apps Script 觸發器不保證在固定分鐘執行。
-- 這個 repository 是公開的：GitHub Actions 對公開 repository 不計分鐘數，所以可以每小時檢查（私人 repository 每次執行只跑幾秒，也會算 1 分鐘）。Bot Token、Chat ID 放在 Secrets，不會公開；執行紀錄裡出現時會自動遮蔽。
-- Telegram 單則訊息有長度限制；大量商品同時變動時會自動分成續篇，每則仍會保留完整變動數量。
-- Apple 調整頁面資料格式時，程式會停止並發錯誤通知，不會把全部商品誤報為下架。
+- 這個 repository 是公開的：程式碼、`data/state.json` 與 Actions 的執行紀錄任何人都看得到。Bot Token、Chat ID 存在 Secrets，不會公開；執行紀錄裡出現時會自動遮蔽。
+- Apps Script 的觸發器不保證固定在哪一分鐘執行。
+- 健康檢查那一次也會完整檢查商品，有變化一樣會通知。
