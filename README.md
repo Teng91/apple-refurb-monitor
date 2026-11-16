@@ -58,9 +58,10 @@ flowchart LR
 ### 2. 設定 GitHub
 
 1. Fork 這個專案（或推到自己的 GitHub repository）。Fork 的 repository 預設停用 Actions，到 **Actions** 頁面按啟用。
-2. **Settings → Secrets and variables → Actions → Secrets**，新增 `TELEGRAM_BOT_TOKEN` 與 `TELEGRAM_CHAT_ID`。
-3. （選用）在同一頁的 **Variables** 設定[篩選條件](#篩選條件)。
-4. **Actions → Apple Refurbished Monitor → Run workflow** 手動執行一次：第一次會建立基準資料並傳送「已啟動」通知。勾選 `health_check` 再執行一次，可以先看看 Health 通知長什麼樣子。
+2. **刪掉 `data/state.json`**（在 GitHub 網頁上點開檔案 → 🗑️ → Commit）。這是原作者的商品快照，留著的話第一次執行會拿它來比對，你會收到一堆跟你的篩選條件無關的變化通知，也收不到「已啟動」通知。
+3. **Settings → Secrets and variables → Actions → Secrets**，新增 `TELEGRAM_BOT_TOKEN` 與 `TELEGRAM_CHAT_ID`。
+4. （選用）在同一頁的 **Variables** 設定[篩選條件](#篩選條件)。
+5. **Actions → Apple Refurbished Monitor → Run workflow** 手動執行一次：第一次會建立基準資料並傳送「已啟動」通知。勾選 `health_check` 再執行一次，可以先看看 Health 通知長什麼樣子。
 
 ### 3. 設定 Google Apps Script 排程
 
