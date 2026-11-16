@@ -1,7 +1,7 @@
 const GITHUB_REPOSITORY = 'Teng91/apple-refurb-monitor';
 const GITHUB_WORKFLOW = 'monitor.yml';
 const GITHUB_REF = 'main';
-const MONITOR_INTERVAL_HOURS = 2;
+const MONITOR_INTERVAL_HOURS = 1;
 
 /** Trigger the Apple refurbished monitor workflow on GitHub Actions. */
 function triggerAppleRefurbMonitor() {
