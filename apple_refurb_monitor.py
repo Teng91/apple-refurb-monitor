@@ -23,6 +23,10 @@ BOOTSTRAP_MARKER = "window.REFURB_GRID_BOOTSTRAP = "
 USER_AGENT = "AppleRefurbMonitor/1.0 (+https://github.com/)"
 # Taiwan has no daylight saving time: a fixed UTC+8 avoids needing the tzdata package on Windows
 TAIPEI = timezone(timedelta(hours=8), "Asia/Taipei")
+# A category that suddenly parses as empty is usually an Apple page glitch, not a sell-out:
+# re-read it a few times before reporting every product in it as removed.
+EMPTY_CATEGORY_RETRIES = 2
+EMPTY_CATEGORY_RETRY_SECONDS = 20
 
 
 @dataclass(frozen=True)
@@ -119,11 +123,24 @@ def matches(product: dict[str, Any], settings: Settings) -> bool:
     return settings.max_price is None or int(product["price"]) <= settings.max_price
 
 
-def collect(settings: Settings) -> dict[str, dict[str, Any]]:
+def fetch_category(category: str) -> dict[str, dict[str, Any]]:
+    return parse_products(fetch(f"{BASE_URL}/tw/shop/refurbished/{category}"), category)
+
+
+def collect(
+    settings: Settings, previous: dict[str, dict[str, Any]] | None = None
+) -> dict[str, dict[str, Any]]:
+    previous = previous or {}
     all_products: dict[str, dict[str, Any]] = {}
     for category in settings.categories:
-        url = f"{BASE_URL}/tw/shop/refurbished/{category}"
-        category_products = parse_products(fetch(url), category)
+        category_products = fetch_category(category)
+        had_products = any(p.get("category") == category for p in previous.values())
+        for _ in range(EMPTY_CATEGORY_RETRIES):
+            if category_products or not had_products:
+                break
+            print(f"{category}: 0 項，但上次有商品，{EMPTY_CATEGORY_RETRY_SECONDS} 秒後重新讀取")
+            time.sleep(EMPTY_CATEGORY_RETRY_SECONDS)
+            category_products = fetch_category(category)
         print(f"{category}: {len(category_products)} 項")
         all_products.update(category_products)
     if not all_products:
@@ -196,13 +213,9 @@ def chunks(changes: list[Change], limit: int = 3900) -> list[str]:
         section_heading = f"{label}（{len(grouped[kind])}）\n"
         for index, change in enumerate(grouped[kind]):
             addition = (section_heading if index == 0 else "") + format_change(change) + "\n\n"
+            # Never split off a message that only has the header: a single oversized
+            # change (unusual, titles and URLs are short) is kept whole instead.
             if len(current) + len(addition) > limit and current != header:
-                result.append(current.rstrip())
-                current = f"🍎 Apple 台灣整修品更新（續）\n{counts}\n\n{section_heading}"
-                addition = format_change(change) + "\n\n"
-            elif len(current) + len(addition) > limit:
-                # Apple product titles and URLs are normally short; retain the
-                # complete change even if one exceptional item exceeds limit.
                 result.append(current.rstrip())
                 current = f"🍎 Apple 台灣整修品更新（續）\n{counts}\n\n{section_heading}"
                 addition = format_change(change) + "\n\n"
@@ -233,16 +246,16 @@ def health_message(checked_at: datetime, product_count: int) -> str:
         "本次商品檢查成功\n"
         f"成功檢查時間：{checked_at:%Y-%m-%d %H:%M:%S}（台北）\n"
         f"目前追蹤：{product_count} 項商品\n"
-        "每小時檢查，商品異動另行通知。"
+        "商品有異動時會另外通知。"
     )
 
 
 def main() -> int:
     settings = Settings.from_env()
     try:
-        current = collect(settings)
-        checked_at = datetime.now(TAIPEI)
         previous = load_state(settings.state_file)
+        current = collect(settings, previous)
+        checked_at = datetime.now(TAIPEI)
         if previous is None:
             save_state(settings.state_file, current)
             print(f"建立基準資料，共 {len(current)} 項")

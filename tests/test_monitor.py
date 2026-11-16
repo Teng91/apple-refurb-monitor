@@ -5,7 +5,17 @@ from datetime import datetime
 from pathlib import Path
 from unittest.mock import patch
 
-from apple_refurb_monitor import BOOTSTRAP_MARKER, Settings, chunks, compare, main, matches, parse_products
+from apple_refurb_monitor import (
+    BOOTSTRAP_MARKER,
+    Change,
+    Settings,
+    chunks,
+    collect,
+    compare,
+    main,
+    matches,
+    parse_products,
+)
 
 
 def page_with(tiles):
@@ -58,6 +68,67 @@ class MonitorTests(unittest.TestCase):
     def test_chunks_returns_no_message_without_changes(self):
         self.assertEqual(chunks([]), [])
 
+    def test_chunks_splits_long_updates_without_header_only_messages(self):
+        changes = [
+            Change("added", {"sku": f"S{i}", "title": f"MacBook Pro {i}", "price": 1000, "url": "u" * 40})
+            for i in range(30)
+        ]
+        messages = chunks(changes, limit=300)
+        self.assertGreater(len(messages), 1)
+        self.assertTrue(messages[1].startswith("🍎 Apple 台灣整修品更新（續）"))
+        for message in messages:
+            self.assertIn("NT$1,000", message)
+        joined = "\n".join(messages)
+        for i in range(30):
+            self.assertIn(f"MacBook Pro {i}\n", joined)
+
+    def test_chunks_keeps_single_oversized_change_whole(self):
+        change = Change("added", {"sku": "BIG", "title": "X" * 500, "price": 1, "url": "u"})
+        messages = chunks([change], limit=100)
+        self.assertEqual(len(messages), 1)
+        self.assertIn("X" * 500, messages[0])
+
+    def collect_with_pages(self, pages_by_category, previous=None):
+        settings = Settings(tuple(pages_by_category), (), (), None, Path("unused.json"), "", "", True, True)
+        calls = []
+
+        def fake_fetch(url):
+            category = url.rsplit("/", 1)[-1]
+            calls.append(category)
+            return pages_by_category[category].pop(0)
+
+        with patch("apple_refurb_monitor.fetch", side_effect=fake_fetch), \
+             patch("apple_refurb_monitor.time.sleep") as sleep:
+            products = collect(settings, previous)
+        return products, calls, sleep
+
+    def test_empty_category_is_reread_when_it_had_products(self):
+        empty = page_with([])
+        previous = {"OLD": {"sku": "OLD", "title": "AirPods", "price": 1, "url": "u", "category": "airpods"}}
+        products, calls, sleep = self.collect_with_pages(
+            {"mac": [page_with([tile()])], "airpods": [empty, page_with([tile(sku="AIR", title="AirPods")])]},
+            previous,
+        )
+        self.assertEqual(calls, ["mac", "airpods", "airpods"])
+        self.assertIn("AIR", products)
+        self.assertEqual(sleep.call_count, 1)
+
+    def test_category_still_empty_after_rereads_is_accepted(self):
+        empty = page_with([])
+        previous = {"OLD": {"sku": "OLD", "title": "AirPods", "price": 1, "url": "u", "category": "airpods"}}
+        products, calls, _ = self.collect_with_pages(
+            {"mac": [page_with([tile()])], "airpods": [empty, empty, empty]}, previous
+        )
+        self.assertEqual(calls.count("airpods"), 3)
+        self.assertEqual(set(products), {"FTESTTA/A"})
+
+    def test_empty_category_without_previous_products_is_not_reread(self):
+        products, calls, sleep = self.collect_with_pages(
+            {"mac": [page_with([tile()])], "airpods": [page_with([])]}, previous=None
+        )
+        self.assertEqual(calls, ["mac", "airpods"])
+        sleep.assert_not_called()
+
     def test_filters(self):
         settings = Settings(("mac",), ("macbook",), ("air",), 50000, None, "", "", True, True)  # type: ignore[arg-type]
         self.assertTrue(matches({"title": "MacBook Pro", "sku": "X", "price": 40000}, settings))
@@ -81,7 +152,7 @@ class MonitorTests(unittest.TestCase):
         self.assertIn("Health", messages[0])
         self.assertIn("目前追蹤：1 項商品", messages[0])
         self.assertIn("（台北）", messages[0])
-        self.assertIn("每小時檢查", messages[0])
+        self.assertIn("商品有異動時會另外通知", messages[0])
 
     def test_failed_check_never_sends_healthy_message(self):
         result, messages = self.run_monitor(health=True, failure=True)

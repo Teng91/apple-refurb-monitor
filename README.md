@@ -29,7 +29,7 @@ flowchart LR
 |---|---|
 | 🍎 Apple 台灣整修品更新 | 有新上架、下架、降價或漲價時。同一次的變化彙總成一則，開頭列出各類數量；價格異動顯示舊價 → 新價。太長時自動分成續篇，每則都保留完整的數量 |
 | 💚 Apple 整修品監控 Health | 每天台北時間 00:00 左右（前後約 15 分鐘）。只有這次商品檢查成功才傳，內容是檢查時間與目前追蹤幾項商品 |
-| ⚠️ Apple 整修品監控執行失敗 | 讀不到 Apple 的頁面、頁面格式改變等。所有分類都解析不到商品時會停下來報錯，不會把全部商品誤報成下架 |
+| ⚠️ Apple 整修品監控執行失敗 | 讀不到 Apple 的頁面、頁面格式改變等。所有分類都解析不到商品時會停下來報錯，不會把全部商品誤報成下架。單一分類突然變成 0 項（上次還有商品）時，會隔 20 秒重新讀取最多兩次，避免 Apple 頁面短暫異常時整個分類被誤報成下架 |
 | ✅ Apple 整修品監控已啟動 | 第一次執行（還沒有 `data/state.json`）建立基準資料時 |
 
 **哪天午夜沒收到 Health 通知，就代表有地方壞了**，見下面的[疑難排解](#疑難排解)。
@@ -131,9 +131,10 @@ $env:DRY_RUN = "true"; python apple_refurb_monitor.py
 | 檔案 | 說明 |
 |---|---|
 | `apple_refurb_monitor.py` | 讀取商品、篩選、比對、組 Telegram 訊息（只用 Python 標準函式庫） |
-| `tests/test_monitor.py` | 單元測試：解析、篩選、比對、訊息分段、Health 與錯誤通知 |
+| `tests/test_monitor.py` | 單元測試：解析、篩選、比對、訊息分段、空分類重新讀取、Health 與錯誤通知 |
 | `data/state.json` | 最新的商品快照；有變化時由 GitHub Actions 機器人 commit。`checked_at` 是最後一次有變化的時間 |
 | `.github/workflows/monitor.yml` | GitHub Actions：執行檢查、把快照 commit 回來；`health_check` 參數決定要不要傳 Health 通知 |
+| `.github/workflows/test.yml` | GitHub Actions：推上 `.py` 檔或開 PR 時自動跑單元測試 |
 | `google_apps_script/Code.gs` | Apps Script 排程的原始碼副本：每小時觸發一次、每天午夜觸發一次健康檢查 |
 
 ## 疑難排解
