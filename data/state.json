@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-18T23:01:05.218542+00:00",
-  "product_count": 44,
+  "checked_at": "2026-11-19T12:01:04.269374+00:00",
+  "product_count": 43,
   "products": {
     "FDEW4TA/A": {
       "sku": "FDEW4TA/A",
@@ -35,13 +35,6 @@
       "title": "Studio Display XDR - 標準玻璃 - 可調整斜度與高度的支架 (整修品)",
       "price": 93190,
       "url": "https://www.apple.com/tw/shop/product/ffel4ta/a/%E6%A8%99%E6%BA%96%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E8%88%87%E9%AB%98%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6",
-      "category": "accessories"
-    },
-    "FFEP4TA/A": {
-      "sku": "FFEP4TA/A",
-      "title": "Studio Display XDR - 奈米紋理玻璃 - 可調整斜度與高度的支架 (整修品)",
-      "price": 101890,
-      "url": "https://www.apple.com/tw/shop/product/ffep4ta/a/%E5%A5%88%E7%B1%B3%E7%B4%8B%E7%90%86%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E8%88%87%E9%AB%98%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6",
       "category": "accessories"
     },
     "FFF14TA/A": {
