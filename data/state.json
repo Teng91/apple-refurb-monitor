@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-20T09:01:05.503826+00:00",
-  "product_count": 39,
+  "checked_at": "2026-11-20T10:01:03.866227+00:00",
+  "product_count": 38,
   "products": {
     "FDEW4TA/A": {
       "sku": "FDEW4TA/A",
@@ -43,13 +43,6 @@
       "price": 53290,
       "url": "https://www.apple.com/tw/shop/product/fff14ta/a/Studio-Display-%E5%A5%88%E7%B1%B3%E7%B4%8B%E7%90%86%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "accessories"
-    },
-    "FHFA4TA/A": {
-      "sku": "FHFA4TA/A",
-      "title": "MacBook Neo Apple A18 Pro 晶片 - 銀色 (整修品)",
-      "price": 20490,
-      "url": "https://www.apple.com/tw/shop/product/fhfa4ta/a/MacBook-Neo-Apple-A18-Pro-%E6%99%B6%E7%89%87-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "mac"
     },
     "FHFF4TA/A": {
       "sku": "FHFF4TA/A",
