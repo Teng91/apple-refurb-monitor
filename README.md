@@ -28,11 +28,23 @@ flowchart LR
 | 通知 | 什麼時候 |
 |---|---|
 | 🍎 Apple 台灣整修品更新 | 有新上架、下架、降價或漲價時。同一次的變化彙總成一則，開頭列出各類數量；價格異動顯示舊價 → 新價。太長時自動分成續篇，每則都保留完整的數量 |
-| 💚 Apple 整修品監控 Health | 每天台北時間 00:00 左右（前後約 15 分鐘）。只有這次商品檢查成功才傳，內容是檢查時間與目前追蹤幾項商品 |
-| ⚠️ Apple 整修品監控執行失敗 | 讀不到 Apple 的頁面、頁面格式改變等。所有分類都解析不到商品時會停下來報錯，不會把全部商品誤報成下架。單一分類突然變成 0 項（上次還有商品）時，會隔 20 秒重新讀取最多兩次，避免 Apple 頁面短暫異常時整個分類被誤報成下架 |
+| 💚 Apple 整修品監控 Health | 每天台北時間 00:00 左右（前後約 15 分鐘），內容是檢查時間與目前追蹤幾項商品。只有這次檢查有完成才傳；如果有分類出問題（見下面），會在這則通知裡用 ⚠️ 列出來 |
+| ⚠️ Apple 整修品監控執行失敗 | **所有分類都讀不到**時才會傳（例如 Apple 整站改版、GitHub 連不上 Apple）。這時會停下來報錯，不會把全部商品誤報成下架 |
 | ✅ Apple 整修品監控已啟動 | 第一次執行（還沒有 `data/state.json`）建立基準資料時 |
 
 **哪天午夜沒收到 Health 通知，就代表有地方壞了**，見下面的[疑難排解](#疑難排解)。
+
+### 單一分類出問題時
+
+一個分類出錯不會讓整次檢查失敗，其他分類照常檢查、照常通知：
+
+| 狀況 | 怎麼處理 |
+|---|---|
+| Apple 拿掉了這個分類的頁面（404） | 當作 0 項。上次還有商品的話，會先隔 20 秒重新讀取最多兩次，確定不是暫時異常 |
+| 讀取失敗（網路逾時、Apple 改了頁面結構等） | 沿用上次的商品，不會誤報下架或上架 |
+| 頁面正常但突然變成 0 項（上次還有商品） | 隔 20 秒重新讀取最多兩次，還是 0 項才當作真的賣完 |
+
+這些狀況不會每小時傳 Telegram 吵你，而是：GitHub Actions 的執行仍然是綠色 ✅，但會出現黃色的警告；如果午夜那次檢查時問題還在，Health 通知裡會用 ⚠️ 列出來（白天短暫出現、午夜前就恢復的問題，只會留在 Actions 的警告裡）。
 
 ## 費用
 
@@ -88,7 +100,7 @@ flowchart LR
 
 | Variable | 範例 | 說明 |
 |---|---|---|
-| `APPLE_CATEGORIES` | `mac,ipad` | 要追蹤的分類，預設全部：`mac,ipad,homepod,appletv,accessories`（Apple 台灣已在 2026 年 11 月拿掉 AirPods 整修品頁面）。Apple 拿掉某個分類的頁面時，該分類會當作 0 項並在 log 留下警告，不會讓整次檢查失敗 |
+| `APPLE_CATEGORIES` | `mac,ipad` | 要追蹤的分類，預設全部：`mac,ipad,homepod,appletv,accessories`（Apple 台灣已在 2026 年 11 月拿掉 AirPods 整修品頁面）。|
 | `INCLUDE_KEYWORDS` | `MacBook Pro,M5` | 名稱或 SKU 至少包含其中一項 |
 | `EXCLUDE_KEYWORDS` | `Studio Display` | 排除包含任一關鍵字的商品 |
 | `MAX_PRICE_TWD` | `60000` | 只追蹤不超過這個價格（台幣）的商品 |
@@ -132,7 +144,7 @@ $env:DRY_RUN = "true"; python apple_refurb_monitor.py
 | 檔案 | 說明 |
 |---|---|
 | `apple_refurb_monitor.py` | 讀取商品、篩選、比對、組 Telegram 訊息（只用 Python 標準函式庫） |
-| `tests/test_monitor.py` | 單元測試：解析、篩選、比對、訊息分段、空分類重新讀取、Health 與錯誤通知 |
+| `tests/test_monitor.py` | 單元測試：解析、篩選、比對、訊息分段、空分類重新讀取、單一分類出錯不中斷、Health 與錯誤通知 |
 | `data/state.json` | 最新的商品快照；有變化時由 GitHub Actions 機器人 commit。`checked_at` 是最後一次有變化的時間 |
 | `.github/workflows/monitor.yml` | GitHub Actions：執行檢查、把快照 commit 回來；`health_check` 參數決定要不要傳 Health 通知 |
 | `.github/workflows/test.yml` | GitHub Actions：推上 `.py` 檔或開 PR 時自動跑單元測試 |
@@ -150,7 +162,9 @@ $env:DRY_RUN = "true"; python apple_refurb_monitor.py
 
 **一次收到很多「下架」**：多半是剛改了篩選條件，見[篩選條件](#篩選條件)。
 
-**收到「找不到 REFURB_GRID_BOOTSTRAP」**：Apple 改了頁面結構，要更新 `parse_bootstrap`。在修好之前每次執行都會報錯，但不會誤報商品變化。
+**Health 通知裡出現「讀取失敗，沿用上次的 N 項商品」**：這個分類這次讀不到（網路問題或 Apple 改了頁面結構），先沿用上次的商品，不會誤報下架。只出現一次通常是暫時的；連續幾天都有，而且原因是「找不到 REFURB_GRID_BOOTSTRAP」，代表 Apple 改了頁面結構，要更新 `parse_bootstrap`。
+
+**Health 通知裡出現「Apple 沒有這個分類的頁面（404）」**：Apple 拿掉了這個分類（例如 2026 年 11 月拿掉 AirPods），這個分類會當作 0 項。可以從 `APPLE_CATEGORIES` 或程式的 `DEFAULT_CATEGORIES` 拿掉它。
 
 ## 注意事項
 

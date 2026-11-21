@@ -137,36 +137,58 @@ def matches(product: dict[str, Any], settings: Settings) -> bool:
 
 
 def fetch_category(category: str) -> dict[str, dict[str, Any]]:
+    """Products of one category page, or None when Apple has no page for it (404)."""
     try:
         page = fetch(f"{BASE_URL}/tw/shop/refurbished/{category}")
     except PageNotFound:
-        # Apple drops a category page when it has nothing to sell there (AirPods, November 2026).
-        # Treat it as empty: the empty-category re-reads still guard against a passing glitch,
-        # and if every category is missing collect() stops with an error.
-        print(f"⚠️ {category}: Apple 沒有這個分類的頁面（404），當作 0 項")
-        return {}
+        return None
     return parse_products(page, category)
 
 
 def collect(
     settings: Settings, previous: dict[str, dict[str, Any]] | None = None
-) -> dict[str, dict[str, Any]]:
+) -> tuple[dict[str, dict[str, Any]], list[str]]:
+    """Read every category and return (matching products, problems found along the way).
+
+    One broken category never fails the whole run:
+    - Apple removed the page (404): the category counts as empty, e.g. AirPods in November 2026.
+    - Any other error (network, page format): its products from the previous run are kept,
+      so nothing is reported as removed or added because of it.
+    The run only fails when not a single category could be read.
+    """
     previous = previous or {}
     all_products: dict[str, dict[str, Any]] = {}
+    problems: list[str] = []
+    read_any = False
     for category in settings.categories:
-        category_products = fetch_category(category)
-        had_products = any(p.get("category") == category for p in previous.values())
-        for _ in range(EMPTY_CATEGORY_RETRIES):
-            if category_products or not had_products:
-                break
-            print(f"{category}: 0 項，但上次有商品，{EMPTY_CATEGORY_RETRY_SECONDS} 秒後重新讀取")
-            time.sleep(EMPTY_CATEGORY_RETRY_SECONDS)
+        old_products = {sku: p for sku, p in previous.items() if p.get("category") == category}
+        try:
             category_products = fetch_category(category)
+            # A category that suddenly reads as empty or missing is usually a passing glitch
+            for _ in range(EMPTY_CATEGORY_RETRIES):
+                if category_products or not old_products:
+                    break
+                print(f"{category}: 0 項，但上次有商品，{EMPTY_CATEGORY_RETRY_SECONDS} 秒後重新讀取")
+                time.sleep(EMPTY_CATEGORY_RETRY_SECONDS)
+                category_products = fetch_category(category)
+        except Exception as exc:
+            problems.append(f"{category}：讀取失敗，沿用上次的 {len(old_products)} 項商品（{str(exc)[:200]}）")
+            all_products.update(old_products)
+            continue
+        if category_products is None:
+            problems.append(f"{category}：Apple 沒有這個分類的頁面（404），當作 0 項")
+            continue
+        read_any = True
         print(f"{category}: {len(category_products)} 項")
         all_products.update(category_products)
+    for problem in problems:
+        # GitHub Actions shows ::warning:: lines as yellow annotations on a green run
+        print(f"::warning::{problem}")
+    if not read_any:
+        raise ValueError("所有分類都讀取失敗，為避免誤報已停止：\n" + "\n".join(problems))
     if not all_products:
         raise ValueError("所有分類均解析不到商品，為避免誤報已停止")
-    return {sku: p for sku, p in all_products.items() if matches(p, settings)}
+    return {sku: p for sku, p in all_products.items() if matches(p, settings)}, problems
 
 
 def load_state(path: Path) -> dict[str, dict[str, Any]] | None:
@@ -261,11 +283,16 @@ def telegram_send(text: str, settings: Settings) -> None:
         raise RuntimeError(f"Telegram 傳送失敗: {result}")
 
 
-def health_message(checked_at: datetime, product_count: int) -> str:
+def health_message(checked_at: datetime, product_count: int, problems: list[str] | tuple[str, ...] = ()) -> str:
+    if problems:
+        status = "本次商品檢查完成，但有分類需要留意："
+        status += "".join(f"\n⚠️ {problem}" for problem in problems)
+    else:
+        status = "本次商品檢查成功"
     return (
         "💚 Apple 整修品監控 Health\n"
-        "本次商品檢查成功\n"
-        f"成功檢查時間：{checked_at:%Y-%m-%d %H:%M:%S}（台北）\n"
+        f"{status}\n"
+        f"檢查時間：{checked_at:%Y-%m-%d %H:%M:%S}（台北）\n"
         f"目前追蹤：{product_count} 項商品\n"
         "商品有異動時會另外通知。"
     )
@@ -275,7 +302,7 @@ def main() -> int:
     settings = Settings.from_env()
     try:
         previous = load_state(settings.state_file)
-        current = collect(settings, previous)
+        current, problems = collect(settings, previous)
         checked_at = datetime.now(TAIPEI)
         if previous is None:
             save_state(settings.state_file, current)
@@ -294,7 +321,8 @@ def main() -> int:
         if settings.health_check:
             # Daily health notice (Apps Script dispatches it around midnight Taipei time).
             # Sent only after a successful store check, so it proves the whole chain still works.
-            telegram_send(health_message(checked_at, len(current)), settings)
+            # Category problems that did not fail the run are listed here once a day.
+            telegram_send(health_message(checked_at, len(current), problems), settings)
             print("已傳送 Health 通知")
         return 0
     except Exception as exc:

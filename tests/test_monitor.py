@@ -106,7 +106,7 @@ class MonitorTests(unittest.TestCase):
 
         with patch("apple_refurb_monitor.fetch", side_effect=fake_fetch), \
              patch("apple_refurb_monitor.time.sleep") as sleep:
-            products = collect(settings, previous)
+            products, self.problems = collect(settings, previous)
         return products, calls, sleep
 
     def test_empty_category_is_reread_when_it_had_products(self):
@@ -142,10 +142,41 @@ class MonitorTests(unittest.TestCase):
         )
         self.assertEqual(set(products), {"FTESTTA/A"})
         self.assertEqual(calls, ["mac", "airpods", "ipad"])
+        self.assertEqual(len(self.problems), 1)
+        self.assertIn("airpods", self.problems[0])
+        self.assertIn("404", self.problems[0])
 
     def test_every_category_missing_stops_with_error(self):
         with self.assertRaises(ValueError):
             self.collect_with_pages({"mac": [PageNotFound("404")], "ipad": [PageNotFound("404")]})
+
+    def test_broken_category_keeps_previous_products_without_failing(self):
+        previous = {
+            "OLDIPAD": {"sku": "OLDIPAD", "title": "iPad", "price": 1, "url": "u", "category": "ipad"},
+            "FTESTTA/A": {"sku": "FTESTTA/A", "title": "MacBook Pro (整修品)", "price": 39900, "url": "u", "category": "mac"},
+        }
+        products, _, _ = self.collect_with_pages(
+            {"mac": [page_with([tile()])], "ipad": [RuntimeError("無法讀取 ipad: timed out")]}, previous
+        )
+        self.assertEqual(set(products), {"FTESTTA/A", "OLDIPAD"})
+        self.assertEqual(len(self.problems), 1)
+        self.assertIn("ipad：讀取失敗，沿用上次的 1 項商品", self.problems[0])
+
+    def test_category_with_changed_page_format_keeps_previous_products(self):
+        previous = {"OLDIPAD": {"sku": "OLDIPAD", "title": "iPad", "price": 1, "url": "u", "category": "ipad"}}
+        products, _, _ = self.collect_with_pages(
+            {"mac": [page_with([tile()])], "ipad": ["<html>new design</html>"]}, previous
+        )
+        self.assertIn("OLDIPAD", products)
+        self.assertIn("REFURB_GRID_BOOTSTRAP", self.problems[0])
+
+    def test_every_category_broken_still_fails_even_with_previous_products(self):
+        previous = {"OLD": {"sku": "OLD", "title": "Mac", "price": 1, "url": "u", "category": "mac"}}
+        with self.assertRaises(ValueError) as raised:
+            self.collect_with_pages(
+                {"mac": [RuntimeError("down")], "ipad": [RuntimeError("down")]}, previous
+            )
+        self.assertIn("所有分類都讀取失敗", str(raised.exception))
 
     def test_fetch_does_not_retry_404(self):
         not_found = HTTPError("https://www.apple.com/x", 404, "Not Found", None, None)
@@ -177,11 +208,11 @@ class MonitorTests(unittest.TestCase):
         self.assertTrue(matches({"title": "MacBook Pro", "sku": "X", "price": 40000}, settings))
         self.assertFalse(matches({"title": "MacBook Air", "sku": "Y", "price": 40000}, settings))
 
-    def run_monitor(self, *, health=False, failure=False, previous=True):
+    def run_monitor(self, *, health=False, failure=False, previous=True, problems=()):
         settings = Settings(("mac",), (), (), None, Path("unused.json"), "token", "chat", False, False)
         products = parse_products(page_with([tile()]), "mac")
         with patch("apple_refurb_monitor.Settings.from_env", return_value=replace(settings, health_check=health)), \
-             patch("apple_refurb_monitor.collect", return_value=products, side_effect=ValueError("store unavailable") if failure else None), \
+             patch("apple_refurb_monitor.collect", return_value=(products, list(problems)), side_effect=ValueError("store unavailable") if failure else None), \
              patch("apple_refurb_monitor.load_state", return_value=products if previous else None), \
              patch("apple_refurb_monitor.save_state"), \
              patch("apple_refurb_monitor.telegram_send") as send:
@@ -219,8 +250,20 @@ class MonitorTests(unittest.TestCase):
     def test_health_message_uses_taipei_time(self):
         from apple_refurb_monitor import health_message
         text = health_message(datetime(2026, 11, 17, 0, 3, 9), 43)
-        self.assertIn("成功檢查時間：2026-11-17 00:03:09（台北）", text)
+        self.assertIn("檢查時間：2026-11-17 00:03:09（台北）", text)
         self.assertIn("目前追蹤：43 項商品", text)
+        self.assertIn("本次商品檢查成功", text)
+
+    def test_health_lists_category_problems_without_failing_the_run(self):
+        result, messages = self.run_monitor(health=True, problems=["airpods：Apple 沒有這個分類的頁面（404），當作 0 項"])
+        self.assertEqual(result, 0)
+        self.assertEqual(len(messages), 1)
+        self.assertIn("有分類需要留意", messages[0])
+        self.assertIn("⚠️ airpods：Apple 沒有這個分類的頁面（404）", messages[0])
+        self.assertNotIn("本次商品檢查成功", messages[0])
+
+    def test_category_problems_alone_send_no_hourly_message(self):
+        self.assertEqual(self.run_monitor(problems=["ipad：讀取失敗"]), (0, []))
 
     def test_regular_run_stays_silent_without_changes(self):
         self.assertEqual(self.run_monitor(), (0, []))
