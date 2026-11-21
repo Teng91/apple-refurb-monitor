@@ -18,7 +18,8 @@ from urllib.request import Request, urlopen
 
 
 BASE_URL = "https://www.apple.com"
-DEFAULT_CATEGORIES = ("mac", "ipad", "airpods", "homepod", "appletv", "accessories")
+# Apple Taiwan removed its refurbished AirPods page (404) in November 2026.
+DEFAULT_CATEGORIES = ("mac", "ipad", "homepod", "appletv", "accessories")
 BOOTSTRAP_MARKER = "window.REFURB_GRID_BOOTSTRAP = "
 USER_AGENT = "AppleRefurbMonitor/1.0 (+https://github.com/)"
 # Taiwan has no daylight saving time: a fixed UTC+8 avoids needing the tzdata package on Windows
@@ -45,7 +46,9 @@ class Settings:
     @classmethod
     def from_env(cls) -> "Settings":
         def csv(name: str, default: str = "") -> tuple[str, ...]:
-            return tuple(x.strip() for x in os.getenv(name, default).split(",") if x.strip())
+            # An unset GitHub variable arrives as an empty string: fall back to the default then too
+            raw = os.getenv(name, "").strip() or default
+            return tuple(x.strip() for x in raw.split(",") if x.strip())
 
         raw_max = os.getenv("MAX_PRICE_TWD", "").strip()
         return cls(
@@ -69,6 +72,10 @@ class Change:
     old_price: int | None = None
 
 
+class PageNotFound(RuntimeError):
+    """The page answered 404: retrying will not help."""
+
+
 def fetch(url: str, attempts: int = 3) -> str:
     error: Exception | None = None
     for attempt in range(attempts):
@@ -76,7 +83,13 @@ def fetch(url: str, attempts: int = 3) -> str:
             request = Request(url, headers={"User-Agent": USER_AGENT, "Accept-Language": "zh-TW,zh;q=0.9"})
             with urlopen(request, timeout=30) as response:
                 return response.read().decode("utf-8")
-        except (HTTPError, URLError, TimeoutError) as exc:
+        except HTTPError as exc:
+            if exc.code == 404:
+                raise PageNotFound(f"找不到頁面 {url}") from exc
+            error = exc
+            if attempt + 1 < attempts:
+                time.sleep(2**attempt)
+        except (URLError, TimeoutError) as exc:
             error = exc
             if attempt + 1 < attempts:
                 time.sleep(2**attempt)
@@ -124,7 +137,15 @@ def matches(product: dict[str, Any], settings: Settings) -> bool:
 
 
 def fetch_category(category: str) -> dict[str, dict[str, Any]]:
-    return parse_products(fetch(f"{BASE_URL}/tw/shop/refurbished/{category}"), category)
+    try:
+        page = fetch(f"{BASE_URL}/tw/shop/refurbished/{category}")
+    except PageNotFound:
+        # Apple drops a category page when it has nothing to sell there (AirPods, November 2026).
+        # Treat it as empty: the empty-category re-reads still guard against a passing glitch,
+        # and if every category is missing collect() stops with an error.
+        print(f"⚠️ {category}: Apple 沒有這個分類的頁面（404），當作 0 項")
+        return {}
+    return parse_products(page, category)
 
 
 def collect(

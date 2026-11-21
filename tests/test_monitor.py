@@ -4,14 +4,18 @@ from dataclasses import replace
 from datetime import datetime
 from pathlib import Path
 from unittest.mock import patch
+from urllib.error import HTTPError
 
 from apple_refurb_monitor import (
     BOOTSTRAP_MARKER,
+    DEFAULT_CATEGORIES,
     Change,
+    PageNotFound,
     Settings,
     chunks,
     collect,
     compare,
+    fetch,
     main,
     matches,
     parse_products,
@@ -95,7 +99,10 @@ class MonitorTests(unittest.TestCase):
         def fake_fetch(url):
             category = url.rsplit("/", 1)[-1]
             calls.append(category)
-            return pages_by_category[category].pop(0)
+            page = pages_by_category[category].pop(0)
+            if isinstance(page, Exception):
+                raise page
+            return page
 
         with patch("apple_refurb_monitor.fetch", side_effect=fake_fetch), \
              patch("apple_refurb_monitor.time.sleep") as sleep:
@@ -128,6 +135,42 @@ class MonitorTests(unittest.TestCase):
         )
         self.assertEqual(calls, ["mac", "airpods"])
         sleep.assert_not_called()
+
+    def test_missing_category_page_is_treated_as_empty(self):
+        products, calls, _ = self.collect_with_pages(
+            {"mac": [page_with([tile()])], "airpods": [PageNotFound("404")], "ipad": [page_with([])]}
+        )
+        self.assertEqual(set(products), {"FTESTTA/A"})
+        self.assertEqual(calls, ["mac", "airpods", "ipad"])
+
+    def test_every_category_missing_stops_with_error(self):
+        with self.assertRaises(ValueError):
+            self.collect_with_pages({"mac": [PageNotFound("404")], "ipad": [PageNotFound("404")]})
+
+    def test_fetch_does_not_retry_404(self):
+        not_found = HTTPError("https://www.apple.com/x", 404, "Not Found", None, None)
+        with patch("apple_refurb_monitor.urlopen", side_effect=not_found) as opener, \
+             patch("apple_refurb_monitor.time.sleep") as sleep:
+            with self.assertRaises(PageNotFound):
+                fetch("https://www.apple.com/x")
+        self.assertEqual(opener.call_count, 1)
+        sleep.assert_not_called()
+
+    def test_fetch_retries_server_errors(self):
+        server_error = HTTPError("https://www.apple.com/x", 503, "Unavailable", None, None)
+        with patch("apple_refurb_monitor.urlopen", side_effect=server_error) as opener, \
+             patch("apple_refurb_monitor.time.sleep"):
+            with self.assertRaises(RuntimeError) as raised:
+                fetch("https://www.apple.com/x")
+        self.assertNotIsInstance(raised.exception, PageNotFound)
+        self.assertEqual(opener.call_count, 3)
+
+    def test_unset_categories_variable_uses_defaults(self):
+        with patch.dict("os.environ", {"APPLE_CATEGORIES": ""}):
+            self.assertEqual(Settings.from_env().categories, DEFAULT_CATEGORIES)
+        self.assertNotIn("airpods", DEFAULT_CATEGORIES)
+        with patch.dict("os.environ", {"APPLE_CATEGORIES": "mac, ipad"}):
+            self.assertEqual(Settings.from_env().categories, ("mac", "ipad"))
 
     def test_filters(self):
         settings = Settings(("mac",), ("macbook",), ("air",), 50000, None, "", "", True, True)  # type: ignore[arg-type]

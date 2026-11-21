@@ -33,7 +33,7 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          APPLE_CATEGORIES: ${{ vars.APPLE_CATEGORIES || 'mac,ipad,airpods,homepod,appletv,accessories' }}
+          APPLE_CATEGORIES: ${{ vars.APPLE_CATEGORIES }}
           INCLUDE_KEYWORDS: ${{ vars.INCLUDE_KEYWORDS }}
           EXCLUDE_KEYWORDS: ${{ vars.EXCLUDE_KEYWORDS }}
           MAX_PRICE_TWD: ${{ vars.MAX_PRICE_TWD }}

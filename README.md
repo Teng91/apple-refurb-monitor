@@ -88,7 +88,7 @@ flowchart LR
 
 | Variable | 範例 | 說明 |
 |---|---|---|
-| `APPLE_CATEGORIES` | `mac,ipad` | 要追蹤的分類，預設全部：`mac,ipad,airpods,homepod,appletv,accessories` |
+| `APPLE_CATEGORIES` | `mac,ipad` | 要追蹤的分類，預設全部：`mac,ipad,homepod,appletv,accessories`（Apple 台灣已在 2026 年 11 月拿掉 AirPods 整修品頁面）。Apple 拿掉某個分類的頁面時，該分類會當作 0 項並在 log 留下警告，不會讓整次檢查失敗 |
 | `INCLUDE_KEYWORDS` | `MacBook Pro,M5` | 名稱或 SKU 至少包含其中一項 |
 | `EXCLUDE_KEYWORDS` | `Studio Display` | 排除包含任一關鍵字的商品 |
 | `MAX_PRICE_TWD` | `60000` | 只追蹤不超過這個價格（台幣）的商品 |
