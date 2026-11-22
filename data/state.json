@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-22T19:01:06.148144+00:00",
-  "product_count": 37,
+  "checked_at": "2026-11-22T22:01:03.121158+00:00",
+  "product_count": 36,
   "products": {
     "FDEW4TA/A": {
       "sku": "FDEW4TA/A",
@@ -217,13 +217,6 @@
       "title": "13 吋 MacBook Air Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU - 天藍色 (整修品)",
       "price": 42900,
       "url": "https://www.apple.com/tw/shop/product/g1h80ta/a/13-%E5%90%8B-MacBook-Air-Apple-M4-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E5%A4%A9%E8%97%8D%E8%89%B2-(%E6%95%B4%E4%BF%AE%E5%93%81)",
-      "category": "mac"
-    },
-    "G1K12TA/A": {
-      "sku": "G1K12TA/A",
-      "title": "24 吋 iMac Apple M4 晶片配備 10 核心 CPU 與 10 核心 GPU、Gigabit 乙太網路、奈米紋理玻璃 - 銀色 (整修品)",
-      "price": 93900,
-      "url": "https://www.apple.com/tw/shop/product/g1k12ta/a/24-%E5%90%8B-imac-apple-m4-%E6%99%B6%E7%89%87-%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-cpu-%E8%88%87-10-%E6%A0%B8%E5%BF%83-gpu-gigabit-%E4%B9%99%E5%A4%AA%E7%B6%B2%E8%B7%AF-%E5%A5%88%E7%B1%B3-%E7%B4%8B%E7%90%86-%E7%8E%BB%E7%92%83-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "G1K56TA/A": {
