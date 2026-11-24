@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-24T11:01:04.430820+00:00",
-  "product_count": 51,
+  "checked_at": "2026-11-24T12:01:05.174136+00:00",
+  "product_count": 50,
   "products": {
     "FDE14TA/A": {
       "sku": "FDE14TA/A",
@@ -14,13 +14,6 @@
       "title": "14 吋 MacBook Pro Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
       "price": 52200,
       "url": "https://www.apple.com/tw/shop/product/fde54ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "mac"
-    },
-    "FDE64TA/A": {
-      "sku": "FDE64TA/A",
-      "title": "14 吋 MacBook Pro Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 銀色 (整修品)",
-      "price": 58200,
-      "url": "https://www.apple.com/tw/shop/product/fde64ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
     },
     "FDEW4TA/A": {
