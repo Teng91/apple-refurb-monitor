@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-24T16:05:19.754947+00:00",
-  "product_count": 46,
+  "checked_at": "2026-11-25T05:01:04.006256+00:00",
+  "product_count": 44,
   "products": {
     "FDE14TA/A": {
       "sku": "FDE14TA/A",
@@ -44,13 +44,6 @@
       "url": "https://www.apple.com/tw/shop/product/fdhc4ta/a",
       "category": "mac"
     },
-    "FDHH4TA/A": {
-      "sku": "FDHH4TA/A",
-      "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 8 核心 GPU - 天藍色 (整修品)",
-      "price": 36300,
-      "url": "https://www.apple.com/tw/shop/product/fdhh4ta/a",
-      "category": "mac"
-    },
     "FDHJ4TA/A": {
       "sku": "FDHJ4TA/A",
       "title": "13 吋 MacBook Air Apple M5 晶片配備 10 核心 CPU 與 10 核心 GPU - 天藍色 (整修品)",
@@ -63,13 +56,6 @@
       "title": "Studio Display XDR - 標準玻璃 - 可調整斜度與高度的支架 (整修品)",
       "price": 93190,
       "url": "https://www.apple.com/tw/shop/product/ffel4ta/a/%E6%A8%99%E6%BA%96%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E8%88%87%E9%AB%98%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6",
-      "category": "accessories"
-    },
-    "FFF14TA/A": {
-      "sku": "FFF14TA/A",
-      "title": "Studio Display - 奈米紋理玻璃 - 可調整斜度的支架 (整修品)",
-      "price": 53290,
-      "url": "https://www.apple.com/tw/shop/product/fff14ta/a/Studio-Display-%E5%A5%88%E7%B1%B3%E7%B4%8B%E7%90%86%E7%8E%BB%E7%92%83-%E5%8F%AF%E8%AA%BF%E6%95%B4%E6%96%9C%E5%BA%A6%E7%9A%84%E6%94%AF%E6%9E%B6-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "accessories"
     },
     "FHFA4TA/A": {
