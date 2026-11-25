@@ -51,4 +51,11 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/state.json
           git commit -m "chore: update refurbished product snapshot"
-          git push
+          # Someone may have pushed to main while this run was checking Apple: rebase onto it
+          # instead of failing, otherwise the snapshot is lost and the same changes are sent again.
+          for attempt in 1 2 3; do
+            git pull --rebase --quiet origin "$GITHUB_REF_NAME" && git push && exit 0
+            echo "Push attempt $attempt failed, retrying"
+            sleep $((attempt * 5))
+          done
+          exit 1

@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import json
 import os
-import re
 import sys
 import time
 from dataclasses import dataclass
@@ -50,19 +49,43 @@ class Settings:
             raw = os.getenv(name, "").strip() or default
             return tuple(x.strip() for x in raw.split(",") if x.strip())
 
-        raw_max = os.getenv("MAX_PRICE_TWD", "").strip()
         return cls(
             categories=csv("APPLE_CATEGORIES", ",".join(DEFAULT_CATEGORIES)),
             include_keywords=tuple(x.casefold() for x in csv("INCLUDE_KEYWORDS")),
             exclude_keywords=tuple(x.casefold() for x in csv("EXCLUDE_KEYWORDS")),
-            max_price=int(raw_max) if raw_max else None,
+            max_price=parse_max_price(os.getenv("MAX_PRICE_TWD", "")),
             state_file=Path(os.getenv("STATE_FILE", "data/state.json")),
-            telegram_token=os.getenv("TELEGRAM_BOT_TOKEN", "").strip(),
-            telegram_chat_id=os.getenv("TELEGRAM_CHAT_ID", "").strip(),
-            notify_first_run=os.getenv("NOTIFY_ON_FIRST_RUN", "true").lower() in {"1", "true", "yes"},
-            dry_run=os.getenv("DRY_RUN", "false").lower() in {"1", "true", "yes"},
-            health_check=os.getenv("HEALTH_CHECK", "false").lower() in {"1", "true", "yes"},
+            notify_first_run=env_flag("NOTIFY_ON_FIRST_RUN", "true"),
+            health_check=env_flag("HEALTH_CHECK"),
+            **telegram_env(),
         )
+
+    @classmethod
+    def notifier_only(cls) -> "Settings":
+        """Just enough to send a Telegram message when the other settings cannot be read."""
+        return cls((), (), (), None, Path("data/state.json"), notify_first_run=False, **telegram_env())
+
+
+def env_flag(name: str, default: str = "false") -> bool:
+    return os.getenv(name, default).strip().lower() in {"1", "true", "yes"}
+
+
+def telegram_env() -> dict[str, Any]:
+    return {
+        "telegram_token": os.getenv("TELEGRAM_BOT_TOKEN", "").strip(),
+        "telegram_chat_id": os.getenv("TELEGRAM_CHAT_ID", "").strip(),
+        "dry_run": env_flag("DRY_RUN"),
+    }
+
+
+def parse_max_price(raw: str) -> int | None:
+    """MAX_PRICE_TWD as an integer; thousands separators such as 60,000 are allowed."""
+    cleaned = raw.strip().replace(",", "").replace("，", "").replace(" ", "")
+    if not cleaned:
+        return None
+    if not cleaned.isdigit():
+        raise ValueError(f"MAX_PRICE_TWD 必須是整數（例如 60000），目前是「{raw.strip()}」")
+    return int(cleaned)
 
 
 @dataclass(frozen=True)
@@ -136,7 +159,7 @@ def matches(product: dict[str, Any], settings: Settings) -> bool:
     return settings.max_price is None or int(product["price"]) <= settings.max_price
 
 
-def fetch_category(category: str) -> dict[str, dict[str, Any]]:
+def fetch_category(category: str) -> dict[str, dict[str, Any]] | None:
     """Products of one category page, or None when Apple has no page for it (404)."""
     try:
         page = fetch(f"{BASE_URL}/tw/shop/refurbished/{category}")
@@ -298,8 +321,22 @@ def health_message(checked_at: datetime, product_count: int, problems: list[str]
     )
 
 
+def report_failure(message: str, settings: Settings) -> int:
+    print(f"錯誤: {message}", file=sys.stderr)
+    try:
+        if settings.dry_run or (settings.telegram_token and settings.telegram_chat_id):
+            telegram_send(f"⚠️ Apple 整修品監控執行失敗\n{message[:3500]}", settings)
+    except Exception as notify_exc:
+        print(f"錯誤通知也傳送失敗: {notify_exc}", file=sys.stderr)
+    return 1
+
+
 def main() -> int:
-    settings = Settings.from_env()
+    try:
+        settings = Settings.from_env()
+    except ValueError as exc:
+        # A mistyped GitHub variable would otherwise fail every run without telling anyone
+        return report_failure(f"設定錯誤：{exc}", Settings.notifier_only())
     try:
         previous = load_state(settings.state_file)
         current, problems = collect(settings, previous)
@@ -326,13 +363,7 @@ def main() -> int:
             print("已傳送 Health 通知")
         return 0
     except Exception as exc:
-        print(f"錯誤: {exc}", file=sys.stderr)
-        try:
-            if settings.telegram_token and settings.telegram_chat_id:
-                telegram_send(f"⚠️ Apple 整修品監控執行失敗\n{str(exc)[:3500]}", settings)
-        except Exception as notify_exc:
-            print(f"錯誤通知也傳送失敗: {notify_exc}", file=sys.stderr)
-        return 1
+        return report_failure(str(exc), settings)
 
 
 if __name__ == "__main__":

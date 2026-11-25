@@ -18,6 +18,7 @@ from apple_refurb_monitor import (
     fetch,
     main,
     matches,
+    parse_max_price,
     parse_products,
 )
 
@@ -195,6 +196,28 @@ class MonitorTests(unittest.TestCase):
                 fetch("https://www.apple.com/x")
         self.assertNotIsInstance(raised.exception, PageNotFound)
         self.assertEqual(opener.call_count, 3)
+
+    def test_max_price_accepts_plain_and_comma_separated_numbers(self):
+        self.assertEqual(parse_max_price("60000"), 60000)
+        self.assertEqual(parse_max_price(" 60,000 "), 60000)
+        self.assertIsNone(parse_max_price(""))
+        with self.assertRaises(ValueError) as raised:
+            parse_max_price("6萬")
+        self.assertIn("MAX_PRICE_TWD", str(raised.exception))
+
+    def test_invalid_setting_is_reported_on_telegram(self):
+        env = {"MAX_PRICE_TWD": "6萬", "TELEGRAM_BOT_TOKEN": "token", "TELEGRAM_CHAT_ID": "chat", "DRY_RUN": "false"}
+        with patch.dict("os.environ", env), \
+             patch("apple_refurb_monitor.collect") as collect_mock, \
+             patch("apple_refurb_monitor.telegram_send") as send:
+            result = main()
+        self.assertEqual(result, 1)
+        collect_mock.assert_not_called()
+        self.assertEqual(send.call_count, 1)
+        message, settings = send.call_args.args
+        self.assertIn("執行失敗", message)
+        self.assertIn("設定錯誤：MAX_PRICE_TWD 必須是整數", message)
+        self.assertEqual((settings.telegram_token, settings.telegram_chat_id), ("token", "chat"))
 
     def test_unset_categories_variable_uses_defaults(self):
         with patch.dict("os.environ", {"APPLE_CATEGORIES": ""}):
