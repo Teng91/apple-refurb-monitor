@@ -124,7 +124,7 @@ flowchart LR
 |---|---|---|
 | 安裝並登入 `gh` | 👤 你 | 登入要在瀏覽器確認 |
 | 建 Telegram Bot、傳訊息給 Bot | 👤 你 | BotFather 只能在 Telegram 裡對話，沒有 API |
-| 查 Chat ID、傳測試訊息 | 🤖 AI | 呼叫 Telegram `getUpdates` |
+| 查 Chat ID | 🤖 AI | 呼叫 Telegram `getUpdates` |
 | Fork、啟用 Actions、刪 `state.json` | 🤖 AI | `gh`、`git` |
 | 設 Secrets、Variables | 🤖 AI | `gh secret set`、`gh variable set` |
 | 第一次執行、確認結果 | 🤖 AI | `gh workflow run`、`gh run watch` |
@@ -147,7 +147,7 @@ flowchart LR
 
 - 安裝 [GitHub CLI](https://cli.github.com/)，執行 `gh auth login` 登入。
 - 照[建立 Telegram Bot](#1-建立-telegram-bot) 第 1、2 步建立 Bot、按 **Start**。要傳到群組的話，照那一節的群組步驟在群組裡傳 `/start@你的Bot帳號`。
-- 把 Bot Token 存成**家目錄**下的 `tg_token.txt`（不要放進 repository 資料夾），內容只有 Token 一行。
+- 把 Bot Token 存成**家目錄**下的 `tg_token.txt`（不要放進 repository 資料夾），內容只有 Token 一行。家目錄在 Windows 是 `C:\Users\你的使用者名稱`，在 macOS 是 `/Users/你的使用者名稱`。Windows 用記事本存檔時，「存檔類型」選「所有檔案」，否則容易存成 `tg_token.txt.txt`，AI 會讀不到。
 
 **2. 🤖 查 Chat ID**
 
