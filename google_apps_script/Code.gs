@@ -4,6 +4,8 @@ const GITHUB_REF = 'main';
 const MONITOR_INTERVAL_HOURS = 1;
 // Daily health notice at this hour, Taipei time (Apps Script fires within about 15 minutes of it).
 const HEALTH_HOUR = 0;
+// Wait this long before each retry when GitHub answers 5xx/429 or the request fails outright.
+const DISPATCH_RETRY_DELAYS_SECONDS = [10, 30, 60];
 
 /** Trigger the Apple refurbished monitor workflow on GitHub Actions. */
 function triggerAppleRefurbMonitor() {
@@ -23,7 +25,7 @@ function dispatchMonitor_(healthCheck) {
 
   const url = 'https://api.github.com/repos/' + GITHUB_REPOSITORY
       + '/actions/workflows/' + GITHUB_WORKFLOW + '/dispatches';
-  const response = UrlFetchApp.fetch(url, {
+  const options = {
     method: 'post',
     contentType: 'application/json',
     headers: {
@@ -33,14 +35,41 @@ function dispatchMonitor_(healthCheck) {
     },
     payload: JSON.stringify({ref: GITHUB_REF, inputs: {health_check: healthCheck}}),
     muteHttpExceptions: true,
-  });
+  };
 
-  const status = response.getResponseCode();
-  const body = response.getContentText();
-  if (status < 200 || status >= 300) {
-    throw new Error('GitHub dispatch failed (' + status + '): ' + body);
+  // GitHub sometimes answers 5xx (or the connection drops) for a moment. Without retrying,
+  // that one error skips the hour, and for the once-a-day health check, the whole day.
+  let lastError = '';
+  for (let attempt = 1; attempt <= DISPATCH_RETRY_DELAYS_SECONDS.length + 1; attempt++) {
+    let status;
+    let body;
+    try {
+      const response = UrlFetchApp.fetch(url, options);
+      status = response.getResponseCode();
+      body = response.getContentText();
+    } catch (e) {
+      status = 0; // network error: no HTTP response at all
+      body = String(e);
+    }
+
+    if (status >= 200 && status < 300) {
+      console.log('GitHub workflow dispatched successfully (' + status + ', attempt ' + attempt + ').');
+      return;
+    }
+    lastError = 'GitHub dispatch failed (' + status + '): ' + body;
+    // 4xx other than 429 (bad token, wrong repository, rejected inputs) will not fix itself.
+    if (!isRetryableStatus_(status) || attempt > DISPATCH_RETRY_DELAYS_SECONDS.length) {
+      break;
+    }
+    const delay = DISPATCH_RETRY_DELAYS_SECONDS[attempt - 1];
+    console.warn(lastError + ' — retrying in ' + delay + 's (attempt ' + attempt + ').');
+    Utilities.sleep(delay * 1000);
   }
-  console.log('GitHub workflow dispatched successfully (' + status + ').');
+  throw new Error(lastError);
+}
+
+function isRetryableStatus_(status) {
+  return status === 0 || status === 429 || status >= 500;
 }
 
 /**

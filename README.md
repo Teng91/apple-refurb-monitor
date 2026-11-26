@@ -91,6 +91,7 @@ flowchart LR
 | `GITHUB_REF` | `main` | 在哪個分支上執行 workflow |
 | `MONITOR_INTERVAL_HOURS` | `1` | 幾小時檢查一次（Apps Script 只接受 1、2、4、6、8、12） |
 | `HEALTH_HOUR` | `0` | 每天台北時間幾點傳健康通知（0–23） |
+| `DISPATCH_RETRY_DELAYS_SECONDS` | `[10, 30, 60]` | GitHub 回 5xx、429 或連線失敗時，每次重試前等幾秒；401、404、422 這類錯誤不會重試 |
 
 改了之後要再執行一次 `installMonitorTrigger` 才會生效。repository 裡的 `Code.gs` 只是副本，真正在跑的是 Apps Script 專案裡那份：兩邊要一起改。
 
@@ -155,7 +156,7 @@ $env:DRY_RUN = "true"; python apple_refurb_monitor.py
 **午夜沒收到 Health 通知**
 
 1. 到 GitHub 的 **Actions** 頁面，看 00:00 左右有沒有一次執行。
-   - **沒有**：Apps Script 沒有觸發成功。到 Apps Script 的「執行項目」看錯誤，最常見的是 `GITHUB_TOKEN` 過期（GitHub 回 401），重新產生後更新指令碼屬性。Apps Script 預設也會寄信通知觸發失敗。
+   - **沒有**：Apps Script 沒有觸發成功。到 Apps Script 的「執行項目」看錯誤，最常見的是 `GITHUB_TOKEN` 過期（GitHub 回 401），重新產生後更新指令碼屬性。GitHub 偶爾會回 500 這類暫時錯誤，`Code.gs` 會自動重試 3 次，全部失敗才算失敗。Apps Script 預設也會寄信通知觸發失敗。
    - **有，但失敗**：通常會收到「執行失敗」的 Telegram 通知；沒收到的話點進那次執行看 log。
    - **有，而且成功**：檢查 `TELEGRAM_BOT_TOKEN`、`TELEGRAM_CHAT_ID` 兩個 Secrets，以及 Bot 有沒有被封鎖。
 2. 也可以手動執行 `triggerDailyHealthCheck`，或在 Actions 頁面勾選 `health_check` 執行，馬上測一次整條流程。
