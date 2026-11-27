@@ -42,6 +42,7 @@ jobs:
         run: python apple_refurb_monitor.py
 
       - name: Persist latest product snapshot
+        id: persist
         run: |
           if [ -z "$(git status --porcelain -- data/state.json)" ]; then
             echo "State unchanged"
@@ -54,8 +55,24 @@ jobs:
           # Someone may have pushed to main while this run was checking Apple: rebase onto it
           # instead of failing, otherwise the snapshot is lost and the same changes are sent again.
           for attempt in 1 2 3; do
-            git pull --rebase --quiet origin "$GITHUB_REF_NAME" && git push && exit 0
+            if git pull --rebase --quiet origin "$GITHUB_REF_NAME"; then
+              git push && exit 0
+            else
+              # A conflicted rebase would make every later attempt fail too
+              git rebase --abort 2>/dev/null || true
+            fi
             echo "Push attempt $attempt failed, retrying"
             sleep $((attempt * 5))
           done
           exit 1
+
+      # The notices were already sent: without the snapshot every later run would send them again
+      - name: Report snapshot push failure
+        if: failure() && steps.persist.outcome == 'failure'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: >-
+          python apple_refurb_monitor.py --report-failure
+          "通知已傳出，但 data/state.json 沒能 push 回 repository，之後每次執行都可能重複傳同樣的變化。請查看：$RUN_URL"

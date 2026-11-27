@@ -28,10 +28,21 @@ flowchart LR
 | 狀況 | 怎麼處理 |
 |---|---|
 | Apple 拿掉了這個分類的頁面（404） | 當作 0 項。上次還有商品的話，會先隔 20 秒重新讀取最多兩次，確定不是暫時異常 |
-| 讀取失敗（網路逾時、Apple 改了頁面結構等） | 沿用上次的商品，不會誤報下架或上架 |
+| 讀取失敗（網路逾時、Apple 改了頁面結構等） | 沿用上次的商品，不會誤報下架或上架。網路錯誤會先重試 3 次 |
+| 少數商品資料格式不符（例如缺價格） | 只略過那幾個商品；整頁的商品都無法解析才當作讀取失敗 |
 | 頁面正常但突然變成 0 項（上次還有商品） | 隔 20 秒重新讀取最多兩次，還是 0 項才當作真的賣完 |
 
 這些狀況不會每小時傳 Telegram：GitHub Actions 的執行仍是綠色 ✅，但會有黃色警告；午夜那次檢查時問題還在的話，Health 通知裡會用 ⚠️ 列出來。所有分類都讀不到時才會停下來報錯（「執行失敗」通知），不會把全部商品誤報成下架。
+
+第一次建立基準資料時有分類讀取失敗，這次會直接報錯、不建立基準，下次執行再試；否則下一次會把那個分類的商品全部誤報為新上架。
+
+## 通知與快照的順序
+
+有變化時，程式先寫入 `data/state.json`、再傳 Telegram，最後由 workflow commit 回 repository。
+
+- Telegram 遇到網路錯誤、5xx 或 429（太頻繁）會重試；429 會照 Telegram 指定的秒數等待。4xx（Chat ID 錯、Bot 被封鎖）不重試，錯誤訊息會附上 Telegram 給的原因（例如 `chat not found`）。
+- 分段訊息傳到一半失敗：整次執行失敗、快照不會 commit，下一次會把整批重傳一次。寧可重複，不會漏掉。
+- 快照 push 失敗（重試 3 次，衝突時會先 `git rebase --abort`）：通知已經傳出，workflow 會再傳一則「執行失敗」並附上執行紀錄的連結，因為修好之前每次執行都可能重複通知。
 
 ## 公開 repository 的安全性
 
@@ -45,12 +56,13 @@ flowchart LR
 
 | 檔案 | 說明 |
 |---|---|
-| `apple_refurb_monitor.py` | 讀取商品、篩選、比對、組 Telegram 訊息（只用 Python 標準函式庫） |
-| `tests/test_monitor.py` | 單元測試：解析、篩選、比對、訊息分段、空分類重新讀取、單一分類出錯不中斷、Health 與錯誤通知 |
+| `apple_refurb_monitor.py` | 讀取商品、篩選、比對、組 Telegram 訊息（只用 Python 標準函式庫）。`run()` 是主流程，通知函式和分類讀取函式都由參數傳入，測試不需要真的連網 |
+| `tests/test_monitor.py` | 單元測試：解析、篩選、比對、訊息分段、空分類重新讀取、單一分類出錯不中斷、快照讀寫、Telegram 重試與錯誤原因、Health 與錯誤通知 |
 | `data/state.json` | 最新的商品快照；有變化時由 GitHub Actions 機器人 commit。`checked_at` 是最後一次有變化的時間 |
 | `.github/workflows/monitor.yml` | GitHub Actions：執行檢查、把快照 commit 回來；`health_check` 參數決定要不要傳 Health 通知 |
 | `.github/workflows/test.yml` | GitHub Actions：推上 `.py` 檔或開 PR 時自動跑單元測試 |
 | `google_apps_script/Code.gs` | Apps Script 排程的原始碼副本：每小時觸發一次、每天午夜觸發一次健康檢查 |
+| `docs/ai-setup.md` | 給 AI 助理照著做的設定步驟 |
 
 ## 本機測試
 
@@ -69,9 +81,11 @@ Windows PowerShell：
 ```powershell
 python -m unittest discover -s tests -v
 $env:DRY_RUN = "true"; python apple_refurb_monitor.py
+$env:HEALTH_CHECK = "true"; python apple_refurb_monitor.py   # 連 Health 通知一起看
+Remove-Item Env:DRY_RUN, Env:HEALTH_CHECK                    # PowerShell 的環境變數會留在整個視窗，用完記得清掉
 ```
 
-`DRY_RUN` 只是不傳 Telegram，照樣會比對並更新 `data/state.json`。不想改到快照的話，把 `data/state.json` 複製到 `work/`，再設定 `STATE_FILE=work/state.json` 執行（`work/` 不會被 commit）。
+`DRY_RUN` 會照樣讀取 Apple、和 `data/state.json` 比對，但 Telegram 訊息只印出來，也**不會寫入** `data/state.json`，所以不會影響正式執行的比對結果。
 
 程式讀取的環境變數：
 
@@ -82,4 +96,4 @@ $env:DRY_RUN = "true"; python apple_refurb_monitor.py
 | `STATE_FILE` | `data/state.json` | 快照檔位置 |
 | `NOTIFY_ON_FIRST_RUN` | `true` | 第一次建立基準時要不要傳「已啟動」通知 |
 | `HEALTH_CHECK` | `false` | 檢查成功後多傳一則 Health 通知 |
-| `DRY_RUN` | `false` | Telegram 訊息只印出來，不真的傳 |
+| `DRY_RUN` | `false` | Telegram 訊息只印出來，不真的傳，也不寫入快照檔 |
