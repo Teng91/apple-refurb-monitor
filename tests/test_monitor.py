@@ -82,6 +82,13 @@ class ParseTests(unittest.TestCase):
         empty_page = f"<script>{BOOTSTRAP_MARKER}{json.dumps({'tiles': None})};</script>"
         self.assertEqual(parse_products(empty_page, "airpods"), {})
 
+    def test_skipped_tiles_are_logged_through_the_given_logger(self):
+        logs = []
+        broken = {"partNumber": "BAD", "price": None}
+        with patch("apple_refurb_monitor.fetch", return_value=page_with([tile(), broken])):
+            collect(("mac",), log=logs.append)
+        self.assertIn("mac: 略過 1 個格式不符的商品", logs)
+
     def test_one_malformed_tile_is_skipped_not_the_whole_category(self):
         broken = {"partNumber": "BAD", "title": "Broken", "productDetailsUrl": "/x", "price": None}
         logs = []
@@ -261,6 +268,22 @@ class CollectTests(unittest.TestCase):
         self.assertIn("OLDIPAD", result.products)
         self.assertIn("REFURB_GRID_BOOTSTRAP", result.problems[0])
 
+    def test_product_listed_in_two_categories_is_one_product_from_the_first(self):
+        result, _, _ = self.collect_with_pages(
+            {"homepod": [page_with([tile(sku="DUP", title="Cable")])],
+             "accessories": [page_with([tile(sku="DUP", title="Cable")])]}
+        )
+        self.assertEqual(list(result.products), ["DUP"])
+        self.assertEqual(result.products["DUP"]["category"], "homepod")
+
+    def test_freshly_read_product_wins_over_one_kept_from_a_broken_category(self):
+        previous = {"DUP": product("DUP", "Cable", 1000, "accessories")}
+        result, _, _ = self.collect_with_pages(
+            {"accessories": [RuntimeError("down")], "homepod": [page_with([tile(sku="DUP", title="Cable", price="800")])]},
+            previous,
+        )
+        self.assertEqual(result.products["DUP"]["price"], 800)
+
     def test_every_category_broken_still_fails_even_with_previous_products(self):
         previous = {"OLD": product("OLD", "Mac", 1, "mac")}
         with self.assertRaises(ValueError) as raised:
@@ -354,6 +377,12 @@ class TelegramTests(unittest.TestCase):
             telegram_send("hi", self.config)
         sleep.assert_called_once_with(7.0)
 
+    def test_odd_retry_after_falls_back_to_normal_backoff(self):
+        limited = http_error(429, b'{"ok":false,"parameters":{"retry_after":"soon"}}')
+        with patch("apple_refurb_monitor.urlopen", side_effect=[limited, response({"ok": True})]),              patch("apple_refurb_monitor.time.sleep") as sleep:
+            telegram_send("hi", self.config)
+        sleep.assert_called_once_with(1)
+
     def test_network_errors_are_retried_then_reported(self):
         with patch("apple_refurb_monitor.urlopen", side_effect=ConnectionResetError()) as opener, \
              patch("apple_refurb_monitor.time.sleep"):
@@ -388,6 +417,7 @@ class RunTests(unittest.TestCase):
         with self.assertRaises(RuntimeError) as raised:
             self.run_monitor({"mac": [page_with([tile()])], "ipad": [RuntimeError("down")]})
         self.assertIn("ipad", str(raised.exception))
+        self.assertIn("從 APPLE_CATEGORIES 拿掉", str(raised.exception))
         self.assertFalse(self.state.exists())
 
     def test_changes_are_saved_and_sent(self):

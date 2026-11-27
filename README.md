@@ -10,9 +10,9 @@
 
 | 通知 | 什麼時候 |
 |---|---|
-| 🍎 整修品更新 | 有新上架、下架、降價或漲價時，同一次的變化彙總成一則 |
+| 🍎 整修品更新 | 有新上架、下架、降價或漲價時，同一次的變化彙總在一起；變化很多時會分成幾則，後面的標題有「（續）」 |
 | 💚 Health | 每天台北時間 00:00 左右，附上目前追蹤幾項商品；有分類讀取異常會用 ⚠️ 列出來 |
-| ⚠️ 執行失敗 | 所有分類都讀不到、GitHub Variables 填錯（訊息會寫是哪個設定）、`data/state.json` 損壞，或通知已傳出但快照沒能存回 repository 時 |
+| ⚠️ 執行失敗 | 所有分類都讀不到、GitHub Variables 填錯（訊息會寫是哪個設定）、`data/state.json` 損壞、第一次建立基準資料時有分類讀取失敗，或通知已傳出但快照沒能存回 repository 時 |
 | ✅ 已啟動 | 第一次執行、建立基準資料時 |
 
 **哪天午夜沒收到 Health 通知，就代表有地方壞了**，見[疑難排解](#疑難排解)。
@@ -91,7 +91,7 @@
 **午夜沒收到 Health 通知**：到 GitHub 的 **Actions** 頁面看 00:00 左右有沒有執行。
 
 - **沒有執行**：到 Apps Script 的「執行項目」看錯誤，最常見是 `GITHUB_TOKEN` 過期（401），重新產生後更新指令碼屬性。
-- **有，但失敗**：點進那次執行看 log。
+- **有，但失敗**：點進那次執行看 log。Telegram 傳不出去時，log 會寫 Telegram 給的原因，例如 `chat not found`（Chat ID 錯，或群組少了負號）、`bot was blocked by the user`（Bot 被封鎖）、`Unauthorized`（Bot Token 錯或被撤銷）。
 - **有，而且成功**：檢查兩個 Telegram Secrets、Bot 有沒有被封鎖；群組的話確認 Chat ID 有負號、Bot 還在群組裡。
 
 想馬上測整條流程，在 Apps Script 執行 `triggerDailyHealthCheck` 即可。
@@ -103,6 +103,8 @@
 **「執行失敗」說快照沒能 push 回 repository**：通知已經傳出去，但 `data/state.json` 沒存回去，修好之前每小時都可能重複收到同樣的變化。點訊息裡的連結看 log，常見原因是有人手動改了 `data/state.json` 造成衝突，或 repository 的 Actions 沒有寫入權限（**Settings → Actions → General → Workflow permissions**）。
 
 **Health 通知出現「讀取失敗，沿用上次的 N 項商品」**：偶爾一次是暫時的網路問題；連續幾天都有，可能是 Apple 改了頁面結構，需要更新程式。
+
+**第一次執行就收到「第一次建立基準資料時有分類讀取失敗」**：通常是暫時的網路問題，下一小時會自動再試。一直出現的話，照訊息把那個分類從 `APPLE_CATEGORIES` 拿掉，其他分類就會開始監控。
 
 **Health 通知出現「Apple 沒有這個分類的頁面（404）」**：Apple 拿掉了這個分類，可以從 `APPLE_CATEGORIES` 拿掉它。
 

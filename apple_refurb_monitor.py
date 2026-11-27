@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from http.client import HTTPException
 from pathlib import Path
-from typing import Any, Callable, Mapping
+from typing import Any, Callable
 from urllib.error import HTTPError
 from urllib.parse import urljoin
 from urllib.request import Request, urlopen
@@ -198,13 +198,13 @@ def parse_products(page: str, category: str, log: Logger = print) -> Products:
     return products
 
 
-def fetch_category(category: str) -> Products | None:
+def fetch_category(category: str, log: Logger = print) -> Products | None:
     """Products of one category page, or None when Apple has no page for it (404)."""
     try:
         page = fetch(f"{BASE_URL}/tw/shop/refurbished/{category}")
     except PageNotFound:
         return None
-    return parse_products(page, category)
+    return parse_products(page, category, log)
 
 
 @dataclass(frozen=True)
@@ -228,9 +228,10 @@ def collect(
       so nothing is reported as removed or added because of it.
     The run only fails when not a single category could be read.
     """
-    fetch_one = fetcher or fetch_category
+    fetch_one = fetcher or (lambda category: fetch_category(category, log))
     previous = previous or {}
-    all_products: Products = {}
+    fresh: Products = {}
+    kept: Products = {}  # previous run's products of categories that could not be read
     problems: list[str] = []
     failed: list[str] = []
     read_any = False
@@ -248,16 +249,22 @@ def collect(
         except Exception as exc:
             problems.append(f"{category}：讀取失敗，沿用上次的 {len(old_products)} 項商品（{str(exc)[:200]}）")
             failed.append(category)
-            all_products.update(old_products)
+            kept.update(old_products)
             continue
         if category_products is None:
             problems.append(f"{category}：Apple 沒有這個分類的頁面（404），當作 0 項")
             continue
         read_any = True
         log(f"{category}: {len(category_products)} 項")
-        all_products.update(category_products)
+        # Apple lists some products in two categories (e.g. a HomePod accessory under both
+        # homepod and accessories). Keyed by SKU it is still one product, notified once; its
+        # stored category is the first one read, so APPLE_CATEGORIES order decides it.
+        for sku, product in category_products.items():
+            fresh.setdefault(sku, product)
     if not read_any:
         raise ValueError("所有分類都讀取失敗，為避免誤報已停止：\n" + "\n".join(problems))
+    # What was read this run always wins over what was kept from the previous run
+    all_products = {**kept, **fresh}
     if not all_products:
         raise ValueError("所有分類均解析不到商品，為避免誤報已停止")
     return CollectResult(all_products, tuple(problems), tuple(failed))
@@ -373,7 +380,7 @@ def health_message(checked_at: datetime, product_count: int, problems: tuple[str
 # --------------------------------------------------------------------------- Telegram
 
 
-def _telegram_error(exc: HTTPError) -> tuple[str, float | None]:
+def _telegram_error(exc: HTTPError) -> tuple[str, Any]:
     """Telegram's own explanation (e.g. "Bad Request: chat not found") and its retry_after."""
     try:
         with exc:
@@ -405,7 +412,7 @@ def telegram_send(text: str, config: TelegramConfig, attempts: int = 3) -> None:
             # 4xx other than 429 (wrong chat id, bot blocked, bad token) will not fix itself
             if exc.code != 429 and exc.code < 500:
                 raise RuntimeError(error) from None
-            if retry_after:
+            if isinstance(retry_after, (int, float)) and retry_after > 0:
                 wait = min(float(retry_after), TELEGRAM_MAX_RETRY_SECONDS)
         except (OSError, HTTPException) as exc:
             error = f"Telegram 傳送失敗: {exc!r}"
@@ -450,7 +457,9 @@ def run(settings: Settings, notify: Notifier, fetcher: CategoryFetcher | None = 
         if result.failed:
             # A baseline without these categories would report all their products as new next time
             raise RuntimeError(
-                "第一次建立基準資料時有分類讀取失敗，這次先不建立，下次執行會再試：\n" + "\n".join(result.problems)
+                "第一次建立基準資料時有分類讀取失敗，這次先不建立，下次執行會再試：\n"
+                + "\n".join(result.problems)
+                + f"\n一直失敗的話，可以先把 {'、'.join(result.failed)} 從 APPLE_CATEGORIES 拿掉，讓其他分類開始監控。"
             )
         persist(current)
         print(f"建立基準資料，共 {len(current)} 項")
@@ -477,17 +486,21 @@ def run(settings: Settings, notify: Notifier, fetcher: CategoryFetcher | None = 
     return 0
 
 
+def notifier_from_env() -> Notifier:
+    """A notifier that needs only the Telegram secrets, for when the other settings are unusable."""
+    return make_notifier(TelegramConfig.from_env(), env_flag("DRY_RUN"))
+
+
 def main(argv: list[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else argv
     if argv[:1] == ["--report-failure"]:
         # Used by the workflow when a later step (pushing the snapshot) fails
-        message = " ".join(argv[1:]) or "未知錯誤"
-        return report_failure(message, make_notifier(TelegramConfig.from_env(), env_flag("DRY_RUN")))
+        return report_failure(" ".join(argv[1:]) or "未知錯誤", notifier_from_env())
     try:
         settings = Settings.from_env()
     except ValueError as exc:
         # A mistyped GitHub variable would otherwise fail every run without telling anyone
-        return report_failure(f"設定錯誤：{exc}", make_notifier(TelegramConfig.from_env(), env_flag("DRY_RUN")))
+        return report_failure(f"設定錯誤：{exc}", notifier_from_env())
     notify = make_notifier(settings.telegram, settings.dry_run)
     try:
         return run(settings, notify)
