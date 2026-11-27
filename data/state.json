@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-11-27T13:01:03.218199+00:00",
-  "product_count": 55,
+  "checked_at": "2026-11-27T16:01:02.751606+00:00",
+  "product_count": 54,
   "products": {
     "FDE14TA/A": {
       "sku": "FDE14TA/A",
@@ -22,13 +22,6 @@
       "price": 58200,
       "url": "https://www.apple.com/tw/shop/product/fde64ta/a/14-%E5%90%8B-MacBook-Pro-Apple-M5-%E6%99%B6%E7%89%87%E9%85%8D%E5%82%99-10-%E6%A0%B8%E5%BF%83-CPU-%E8%88%87-10-%E6%A0%B8%E5%BF%83-GPU-%E9%8A%80%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
       "category": "mac"
-    },
-    "FDEW4TA/A": {
-      "sku": "FDEW4TA/A",
-      "title": "HomePod (第 2 代) - 午夜色 (整修品)",
-      "price": 9400,
-      "url": "https://www.apple.com/tw/shop/product/fdew4ta/a/HomePod-%E7%AC%AC-2-%E4%BB%A3-%E5%8D%88%E5%A4%9C%E8%89%B2-%E6%95%B4%E4%BF%AE%E5%93%81",
-      "category": "accessories"
     },
     "FDEY4TA/A": {
       "sku": "FDEY4TA/A",
